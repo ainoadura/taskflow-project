@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntada Maestra</title>
+    <!-- LOGO DE LA PESTAÑA -->
+    <link rel="icon" type="image/png" href="img/icono.png">
+    <!-- LINK PARA LA FUENTE DE LA CABECERA -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+
+    <!-- Definimos variables CSS -->
+     <style>
+        :root {
+            /* Paleta de Colores */
+            --color-primario: #83bdf7;       /* Azul principal */
+            --color-secundario: #b38ffa;     /* Morado claro secundario */
+            --color-acento: #f59e0b;         /* Naranja para resaltar */
+            --color-texto: #000000;           /* Blanco para lectura */
+            --color-fondo: #ffffff;          /* Blanco de fondo */
+
+            /* Fuentes */
+            --fuente-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --tamano-h1: 2rem;
+            --tamano-cuerpo: 1rem;
+
+            /* Espaciados y Bordes */
+            --espacio-pequeno: 8px;
+            --espacio-medio: 16px;
+            --espacio-grande: 32px;
+            --radio-borde: 12px;
+            
+            /* Sombras para dar profundidad de "App" */
+            --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    
+        body {
+            font-family: var(--fuente-principal);
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            /* Ruta de tu imagen */
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');
+            background-size: cover;       /* Ajusta la imagen al ancho y alto */
+            background-position: center;  /* Centra la foto */
+            height: 200px;                /* Altura del banner */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: whitesmoke;                 /* Texto blanco sobre la imagen */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        section {
+            background-color: var(--color-primario);
+            margin: var(--espacio-medio);
+            padding: var(--espacio-grande);
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+        }
+
+        aside {
+            background-color: var(--color-secundario);
+            margin: var(--espacio-medio);
+            padding: var(--espacio-grande);
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+        }
+
+        footer {
+            background-color: var(--color-fondo);
+            margin: var(--espacio-medio);
+            padding: var(--espacio-grande);
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif; font-style: italic; /* Cambia aquí según tu elección */
+            font-size: 4rem;
+            color: whitesmoke;
+            margin-bottom: 0.2em; /* Espacio elegante con el subtítulo */
+            line-height: 1.1;     /* Ajusta el salto de línea interno */
+            text-align: center;
+        }
+
+
+        /*Maquetar la lista de tareas*/
+        :root {
+            /* Añadimos colores para los badges */
+            --color-alta: #fef3c7;
+            --texto-alta: #991b1b;
+            --color-media: #fef3c7;
+            --texto-media: #92400e;
+            --color-baja: #fef3c7;
+            --texto-baja: #12941A;
+        }
+
+        .lista-tareas {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tarea-item {
+            display: flex; /* Activa Flexbox */
+            justify-content: space-between; /* Título a la izquierda, Badge a la derecha */
+            align-items: center; /* Alineación vertical perfecta */
+            padding: var(--espacio-medio);
+            background: var(--color-fondo);
+            border-radius: var(--radio-borde);
+            margin-bottom: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tarea-item:hover {
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-suave);
+        }
+
+        /* Alineación de Checkbox + Texto */
+        .tarea-check {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tarea-check input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .tarea-info {
+            display: flex;
+            flex-direction: column; /* Apila título y categoría uno sobre otro */
+            gap: 4px; /* Espacio pequeño entre ellos */
+        }
+
+        .tarea-titulo {
+            display: block;
+            font-weight: 600;
+            color: var(--color-texto);
+            cursor: pointer;
+        }
+
+        .tarea-categoria {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Estilo de los Badges */
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-alta { background: var(--color-alta); color: var(--texto-alta); }
+        .badge-media { background: var(--color-media); color: var(--texto-media); }
+        .badge-baja { background: var(--color-baja); color: var(--texto-baja); }
+
+        /* Estructura base para pantallas grandes (Escritorio) */
+        .contenedor-app {
+            display: flex;
+            flex-direction: row; /* Uno al lado del otro */
+            gap: var(--espacio-medio);
+        }
+
+        aside {
+            flex: 1; /* Ocupa un ancho fijo o proporcional */
+            min-width: 250px;
+        }
+
+        main {
+            flex: 3; /* Ocupa el resto del espacio */
+        }
+
+        /* --- MEDIA QUERY PARA MÓVILES --- */
+        @media (max-width: 768px) {
+            .contenedor-app {
+                flex-direction: column; /* Apila la barra lateral arriba del contenido */
+            }
+
+            aside {
+                width: 100%; /* La barra lateral ocupa todo el ancho */
+                min-width: unset;
+            }
+            
+            .tarea-item {
+                flex-direction: column; /* Las tareas también se apilan si son muy anchas */
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>Puntada Maestra</h1> 
+    </header>
+
+    <main>
+        <section id="inicio">
+            <div class="cabecera-seccion">
+                 <h2>Mis Tareas</h2>
+                 <span class="contador">3 pendientes</span>
+             </div>
+
+            <ul class="lista-tareas">
+                <!-- Tarea 1 -->
+                <li class="tarea-item">
+                    <div class="tarea-check">
+                        <div class="tarea-info">
+                            <label for="t1" class="tarea-titulo">Entrega de encargo terminado </label>
+                            <span class="tarea-categoria">Planchado, empaquetado y cobro</span>
+                        </div>
+                    </div>
+                    <span class="badge badge-alta">Alta</span>
+                </li>
+
+                <!-- Tarea 2 -->
+                <li class="tarea-item">
+                    <div class="tarea-check">
+                        <div class="tarea-info">
+                            <label for="t2" class="tarea-titulo">Toma de medidas</label>
+                            <span class="tarea-categoria">Cita con nuevos clientes para nuevos proyectos</span>
+                        </div>
+                    </div>
+                    <span class="badge badge-media">Media</span>
+                </li>
+
+                <!-- Tarea 3 -->
+                <li class="tarea-item">
+                    <div class="tarea-check">
+                        <div class="tarea-info">
+                            <label for="t3" class="tarea-titulo">Actualizar catálogo/RRSS</label>
+                            <span class="tarea-categoria">Subir fotos de los trabajos terminados</span>
+                        </div>
+                    </div>
+                    <span class="badge badge-baja">Baja</span>
+                </li>
+            </ul>
+            
+        </section>
+    </main>
+
+    <aside>
+        <h2>Estado de las Tareas</h2>
+        
+        <div class="tarjeta-stats">
+        <div class="stat-item">
+            <span class="stat-numero">1</span>
+            <span class="stat-label">🔴 Prioridad: Alta</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-numero">1</span>
+            <span class="stat-label">🟡 Prioridad: Media</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-numero">1</span>
+            <span class="stat-label">🟢 Prioridad: Baja</span>
+        </div>
+    </div>
+    </aside>
+
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
+
+</body>
+</html>
