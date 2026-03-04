@@ -191,12 +191,14 @@
         /* --- MEDIA QUERY PARA MÓVILES --- */
         @media (max-width: 768px) {
             .contenedor-app {
+                display:flex;
                 flex-direction: column; /* Apila la barra lateral arriba del contenido */
             }
 
             aside {
                 width: 100%; /* La barra lateral ocupa todo el ancho */
                 min-width: unset;
+                box-sizing: border-box;
             }
             
             .tarea-item {
