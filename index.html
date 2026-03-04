@@ -122,6 +122,22 @@
             box-shadow: var(--sombra-suave);
         }
 
+        .btn-eliminar {
+            background-color: var(--color-acento);
+            color: var(--color-texto);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-eliminar:hover {
+            background-color: var(--color-acento);
+        }
+
         /* Alineación de Checkbox + Texto */
         .tarea-check {
             display: flex;
@@ -220,69 +236,54 @@
             <section id="inicio">
                 <div class="cabecera-seccion">
                     <h2>Mis Tareas</h2>
-                    <span class="contador">3 pendientes</span>
+                    <span class="contador">Añadir tareas:</span>
                 </div>
 
-                <ul class="lista-tareas">
-                    <!-- Tarea 1 -->
-                    <li class="tarea-item">
-                        <div class="tarea-check">
-                            <div class="tarea-info">
-                                <label for="t1" class="tarea-titulo">Entrega de encargo terminado </label>
-                                <span class="tarea-categoria">Planchado, empaquetado y cobro</span>
-                            </div>
-                        </div>
-                        <span class="badge badge-alta">Alta</span>
-                    </li>
+                <!-- El formulario -->
+                <form id="miFormulario">
+                    <input type="text" id="inputTarea" placeholder="Escribe una tarea">
+                    <input type="text" id="inputCategoria" placeholder="Descripción">
 
-                    <!-- Tarea 2 -->
-                    <li class="tarea-item">
-                        <div class="tarea-check">
-                            <div class="tarea-info">
-                                <label for="t2" class="tarea-titulo">Toma de medidas</label>
-                                <span class="tarea-categoria">Cita con nuevos clientes para nuevos proyectos</span>
-                            </div>
-                        </div>
-                        <span class="badge badge-media">Media</span>
-                    </li>
+                    <!-- Desplegable de prioridad -->
+                    <select id="prioridadTarea">
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
 
-                    <!-- Tarea 3 -->
-                    <li class="tarea-item">
-                        <div class="tarea-check">
-                            <div class="tarea-info">
-                                <label for="t3" class="tarea-titulo">Actualizar catálogo/RRSS</label>
-                                <span class="tarea-categoria">Subir fotos de los trabajos terminados</span>
-                            </div>
-                        </div>
-                        <span class="badge badge-baja">Baja</span>
-                    </li>
-                </ul>
+                    <button type="submit">Agregar</button>
+                </form>
+
+                <ul id="listaTareas", class="lista-tareas"></ul>
                 
             </section>
         </main>
 
         <aside>
             <h2>Estado de las Tareas</h2>
-            
+            <!--
             <div class="tarjeta-stats">
-            <div class="stat-item">
-                <span class="stat-numero">1</span>
-                <span class="stat-label">🔴 Prioridad: Alta</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-numero">1</span>
-                <span class="stat-label">🟡 Prioridad: Media</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-numero">1</span>
-                <span class="stat-label">🟢 Prioridad: Baja</span>
-            </div>
-        </div>
+                <div class="stat-item">
+                    <span class="stat-numero">1</span>
+                    <span class="stat-label">🔴 Prioridad: Alta</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-numero">1</span>
+                    <span class="stat-label">🟡 Prioridad: Media</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-numero">1</span>
+                    <span class="stat-label">🟢 Prioridad: Baja</span>
+                </div>
+        
+             </div> 
+             -->
+             <ul id="listaTareas", style="border: none; min-height: 50px;"></ul>
         </aside>
     </div>
     <footer>
         <p>&copy; 2024</p>
     </footer>
-
+    <script src="app.js"></script>
 </body>
 </html>
