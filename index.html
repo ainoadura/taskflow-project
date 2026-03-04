@@ -181,7 +181,7 @@
 
         aside {
             flex: 1; /* Ocupa un ancho fijo o proporcional */
-            min-width: 200px;
+            min-width: 250px;
         }
 
         main {
@@ -192,11 +192,11 @@
         @media (max-width: 768px) {
             .contenedor-app {
                 display:flex;
-                flex-direction: column; /* Apila la barra lateral arriba del contenido */
+                flex-direction: column; /* Apila la barra lateral debajo del contenido */
+                box-sizing: border-box;
             }
 
             aside {
-                width: 100%; /* La barra lateral ocupa todo el ancho */
                 min-width: unset;
                 box-sizing: border-box;
             }
