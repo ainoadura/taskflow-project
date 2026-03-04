@@ -166,16 +166,22 @@
         .badge-media { background: var(--color-media); color: var(--texto-media); }
         .badge-baja { background: var(--color-baja); color: var(--texto-baja); }
 
+        /* Estructura para pantallas pequeñas (móvil) */
+        .contenedor-app {
+            display: flex;
+            flex-direction: column; /* Apilados uno debajo del otro */
+        }
+
         /* Estructura base para pantallas grandes (Escritorio) */
         .contenedor-app {
             display: flex;
             flex-direction: row; /* Uno al lado del otro */
-            gap: var(--espacio-medio);
+            gap: var(--espacio-pequeno);
         }
 
         aside {
             flex: 1; /* Ocupa un ancho fijo o proporcional */
-            min-width: 250px;
+            min-width: 200px;
         }
 
         main {
@@ -207,7 +213,7 @@
         <h1>Puntada Maestra</h1> 
     </header>
 
-    <div style="display: flex;">
+    <div class="contenedor-app", style="display: flex;">
         <main>
             <section id="inicio">
                 <div class="cabecera-seccion">
