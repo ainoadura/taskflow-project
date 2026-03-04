@@ -207,70 +207,71 @@
         <h1>Puntada Maestra</h1> 
     </header>
 
-    <main>
-        <section id="inicio">
-            <div class="cabecera-seccion">
-                 <h2>Mis Tareas</h2>
-                 <span class="contador">3 pendientes</span>
-             </div>
+    <div style="display: flex;">
+        <main>
+            <section id="inicio">
+                <div class="cabecera-seccion">
+                    <h2>Mis Tareas</h2>
+                    <span class="contador">3 pendientes</span>
+                </div>
 
-            <ul class="lista-tareas">
-                <!-- Tarea 1 -->
-                <li class="tarea-item">
-                    <div class="tarea-check">
-                        <div class="tarea-info">
-                            <label for="t1" class="tarea-titulo">Entrega de encargo terminado </label>
-                            <span class="tarea-categoria">Planchado, empaquetado y cobro</span>
+                <ul class="lista-tareas">
+                    <!-- Tarea 1 -->
+                    <li class="tarea-item">
+                        <div class="tarea-check">
+                            <div class="tarea-info">
+                                <label for="t1" class="tarea-titulo">Entrega de encargo terminado </label>
+                                <span class="tarea-categoria">Planchado, empaquetado y cobro</span>
+                            </div>
                         </div>
-                    </div>
-                    <span class="badge badge-alta">Alta</span>
-                </li>
+                        <span class="badge badge-alta">Alta</span>
+                    </li>
 
-                <!-- Tarea 2 -->
-                <li class="tarea-item">
-                    <div class="tarea-check">
-                        <div class="tarea-info">
-                            <label for="t2" class="tarea-titulo">Toma de medidas</label>
-                            <span class="tarea-categoria">Cita con nuevos clientes para nuevos proyectos</span>
+                    <!-- Tarea 2 -->
+                    <li class="tarea-item">
+                        <div class="tarea-check">
+                            <div class="tarea-info">
+                                <label for="t2" class="tarea-titulo">Toma de medidas</label>
+                                <span class="tarea-categoria">Cita con nuevos clientes para nuevos proyectos</span>
+                            </div>
                         </div>
-                    </div>
-                    <span class="badge badge-media">Media</span>
-                </li>
+                        <span class="badge badge-media">Media</span>
+                    </li>
 
-                <!-- Tarea 3 -->
-                <li class="tarea-item">
-                    <div class="tarea-check">
-                        <div class="tarea-info">
-                            <label for="t3" class="tarea-titulo">Actualizar catálogo/RRSS</label>
-                            <span class="tarea-categoria">Subir fotos de los trabajos terminados</span>
+                    <!-- Tarea 3 -->
+                    <li class="tarea-item">
+                        <div class="tarea-check">
+                            <div class="tarea-info">
+                                <label for="t3" class="tarea-titulo">Actualizar catálogo/RRSS</label>
+                                <span class="tarea-categoria">Subir fotos de los trabajos terminados</span>
+                            </div>
                         </div>
-                    </div>
-                    <span class="badge badge-baja">Baja</span>
-                </li>
-            </ul>
+                        <span class="badge badge-baja">Baja</span>
+                    </li>
+                </ul>
+                
+            </section>
+        </main>
+
+        <aside>
+            <h2>Estado de las Tareas</h2>
             
-        </section>
-    </main>
-
-    <aside>
-        <h2>Estado de las Tareas</h2>
-        
-        <div class="tarjeta-stats">
-        <div class="stat-item">
-            <span class="stat-numero">1</span>
-            <span class="stat-label">🔴 Prioridad: Alta</span>
+            <div class="tarjeta-stats">
+            <div class="stat-item">
+                <span class="stat-numero">1</span>
+                <span class="stat-label">🔴 Prioridad: Alta</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-numero">1</span>
+                <span class="stat-label">🟡 Prioridad: Media</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-numero">1</span>
+                <span class="stat-label">🟢 Prioridad: Baja</span>
+            </div>
         </div>
-        <div class="stat-item">
-            <span class="stat-numero">1</span>
-            <span class="stat-label">🟡 Prioridad: Media</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-numero">1</span>
-            <span class="stat-label">🟢 Prioridad: Baja</span>
-        </div>
+        </aside>
     </div>
-    </aside>
-
     <footer>
         <p>&copy; 2024</p>
     </footer>
