@@ -167,21 +167,26 @@
         }
 
         .buscador-container {
+            width: 100%;                    
             margin-bottom: 20px;
+            display: flex;
+   
         }
 
         #inputBusqueda {
             width: 100%;
-            padding: 10px 15px;
+            box-sizing: border-box;
+            padding: 12px 20px;
             border: 2px solid #eee;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            border-radius: 25px;
+            font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         #inputBusqueda:focus {
             border-color: var(--color-acento);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
         }
 
         /* Alineación de Checkbox + Texto */
