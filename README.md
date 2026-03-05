@@ -1,6 +1,6 @@
 # 📝 Taskflow Project
 
-**🚀 Ver aplicación en vivo:** [Haz clic aquí para abrir la App](https://ainoadura.github.io)
+**🚀 Aplicación en vivo:** [https://ainoadura.github.io/taskflow-project/](https://ainoadura.github.io/taskflow-project/)
 
 ---
 
