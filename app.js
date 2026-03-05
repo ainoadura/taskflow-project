@@ -1,17 +1,18 @@
-// 1. VARIABLES Y CARGA INICIAL
+// 1. SELECTORES Y CARGA INICIAL
 const formulario = document.querySelector('#miFormulario');
 const listaTareas = document.querySelector('#listaTareas');
 const listaResumen = document.querySelector('#listaResumen');
 const inputBusqueda = document.querySelector('#inputBusqueda');
 
-// Cargamos las tareas del disco o empezamos con un array vacío
+// Cargamos de localStorage o empezamos vacío
 let tareas = JSON.parse(localStorage.getItem('misTareas')) || [];
 
-// 2. FUNCIÓN PARA DIBUJAR (La pieza maestra)
+// 2. FUNCIÓN DE RENDERIZADO (Dibuja y activa botones)
 function renderizarTarea(tarea) {
     const nuevaLi = document.createElement('li');
     nuevaLi.className = 'tarea-item';
-    
+    nuevaLi.dataset.id = tarea.id; // Guardamos el ID para identificarla
+
     nuevaLi.innerHTML = `
         <div class="tarea-info">
             <label class="tarea-titulo">${tarea.titulo}</label>
@@ -25,127 +26,71 @@ function renderizarTarea(tarea) {
         </div>
     `;
 
-    // --- LÓGICA DE CARGA (Donde aparece al abrir la web) ---
-    const listaMain = document.querySelector('#listaTareas');
-    const listaAside = document.querySelector('#listaResumen');
-
+    // Lógica para decidir dónde colocarla al cargar/mover
     if (tarea.estado === 'progreso' || tarea.estado === 'finalizado') {
-        // Si el estado no es "pendiente", va al Aside directamente
-        listaAside.appendChild(nuevaLi);
-        aplicarEstiloEstado(nuevaLi, tarea.estado);
+        listaResumen.appendChild(nuevaLi);
+        aplicarEstilosAside(nuevaLi, tarea.estado);
     } else {
-        // Si es nueva o "pendiente", va al Main
-        listaMain.appendChild(nuevaLi);
+        listaTareas.appendChild(nuevaLi);
     }
 
-    // Botón Progreso -> Mueve al aside
+    // EVENTOS DE BOTONES
     nuevaLi.querySelector('.btn-progreso').addEventListener('click', () => {
-        const destino = document.getElementById('listaResumen');
-        if (destino) {
-            nuevaLi.style.borderLeft = "5px solid #f1c40f";
-            nuevaLi.querySelector('.tarea-titulo').style.textDecoration = "line-through";
-            nuevaLi.querySelector('.btn-finalizado').style.display = 'none';
-            
-            tarea.estado = 'progreso';
-            actualizarLocalStorage();
-            listaAside.appendChild(nuevaLi);
-            aplicarEstiloEstado(nuevaLi, 'progreso');
-
-            localStorage.setItem('misTareas', JSON.stringify(tareas));
-            
-            destino.appendChild(nuevaLi);
-
-             // Cambiar el texto del botón que queda
-            nuevaLi.querySelector('.btn-progreso').textContent = "EN CURSO...";
-        }
+        tarea.estado = 'progreso';
+        actualizarTodo(nuevaLi, 'progreso');
     });
 
-    // Botón Finalizado -> Mueve al aside y tacha
     nuevaLi.querySelector('.btn-finalizado').addEventListener('click', () => {
-        const destino = document.getElementById('listaResumen');
-        if (destino) {
-            nuevaLi.style.borderLeft = "5px solid #2ecc71";
-            nuevaLi.querySelector('.tarea-titulo').style.textDecoration = "line-through";
-            nuevaLi.querySelector('.btn-progreso').style.display = 'none';
-            
-            tarea.estado = 'finalizado';
-            actualizarLocalStorage();
-            listaAside.appendChild(nuevaLi);
-            aplicarEstiloEstado(nuevaLi, 'finalizado');
-
-            localStorage.setItem('misTareas', JSON.stringify(tareas));
-            
-            destino.appendChild(nuevaLi);
-
-            // Cambiar el texto del botón que queda
-            nuevaLi.querySelector('.btn-finalizado').textContent = "COMPLETADA";
-        }
+        tarea.estado = 'finalizado';
+        actualizarTodo(nuevaLi, 'finalizado');
     });
 
-    // Botón Eliminar -> Borra y guarda cambios
     nuevaLi.querySelector('.btn-eliminar').addEventListener('click', () => {
         tareas = tareas.filter(t => t.id !== tarea.id);
-        actualizarLocalStorage();
-
-        localStorage.setItem('misTareas', JSON.stringify(tareas));
-
+        guardarEnDisco();
         nuevaLi.remove();
     });
-
-    // Función auxiliar para no repetir código de estilos
-    function aplicarEstiloEstado(elemento, estado) {
-        elemento.style.transition = "none";
-        if (estado === 'progreso') {
-            elemento.style.borderLeft = "5px solid #f1c40f";
-        } else if (estado === 'finalizado') {
-            elemento.style.borderLeft = "5px solid #2ecc71";
-        }
-        // Ocultamos botones para que no se "suavice" ni se sature el aside
-        elemento.querySelector('.btn-progreso').style.display = 'none';
-        elemento.querySelector('.btn-finalizar').style.display = 'none';
-    }
-}
-// Función para guardar siempre el array actual
-    function actualizarLocalStorage() {
-        localStorage.setItem('misTareas', JSON.stringify(tareas));
-
-        listaTareas.appendChild(nuevaLi);
 }
 
-// EVENTO PARA AÑADIR TAREAS
+// 3. FUNCIONES AUXILIARES (Para evitar errores de duplicidad)
+function actualizarTodo(elemento, nuevoEstado) {
+    listaResumen.appendChild(elemento); // Mueve el nodo al aside
+    aplicarEstilosAside(elemento, nuevoEstado);
+    guardarEnDisco();
+}
+
+function aplicarEstilosAside(elemento, estado) {
+    elemento.style.transition = "none"; // Sin suavizados
+    elemento.style.borderLeft = (estado === 'progreso') ? "5px solid #f1c40f" : "5px solid #2ecc71";
+    // Ocultar botones para limpiar el aside
+    elemento.querySelector('.btn-progreso').style.display = 'none';
+    elemento.querySelector('.btn-finalizado').style.display = 'none';
+    elemento.querySelector('.btn-eliminar').style.display = 'inline-block'; // Dejar eliminar si quieres
+}
+
+function guardarEnDisco() {
+    localStorage.setItem('misTareas', JSON.stringify(tareas));
+}
+
+// 4. EVENTOS GLOBALES
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+    const titulo = document.querySelector('#inputTarea').value.trim();
+    if (!titulo) return;
+
     const nuevaTarea = {
         id: Date.now(),
-        titulo: document.querySelector('#inputTarea').value.trim(),
+        titulo: titulo,
         categoria: document.querySelector('#inputCategoria').value.trim() || "General",
         prioridad: document.querySelector('#prioridadTarea').value,
         estado: 'pendiente'
     };
 
-    if (nuevaTarea.titulo !== "") {
-        tareas.push(nuevaTarea);
-        localStorage.setItem('misTareas', JSON.stringify(tareas)); // GUARDAR
-        renderizarTarea(nuevaTarea); // DIBUJAR
-        formulario.reset();
-    }
+    tareas.push(nuevaTarea);
+    guardarEnDisco();
+    renderizarTarea(nuevaTarea);
+    formulario.reset();
 });
 
-// EL BUSCADOR
-inputBusqueda.addEventListener('input', () => {
-    const texto = inputBusqueda.value.toLowerCase();
-    document.querySelectorAll('.tarea-item').forEach(li => {
-        const coincidencia = li.querySelector('.tarea-titulo').textContent.toLowerCase().includes(texto);
-        li.style.display = coincidencia ? 'flex' : 'none';
-    });
-});
-
-// Recorre el array guardado y dibuja cada tarea
+// 5. MOTOR DE CARGA (¡Debe ir al final!)
 tareas.forEach(t => renderizarTarea(t));
-
-
-
-
-
-
