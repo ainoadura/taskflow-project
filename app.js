@@ -59,7 +59,8 @@ function actualizarTodo(elemento, nuevoEstado) {
 }
 
 function aplicarEstilosAside(elemento, estado) {
-    elemento.style.transition = "none"; // Sin suavizados
+    elemento.style.transition = "none";
+    elemento.style.borderLeft = (estado === 'progreso') ? "5px solid #f1c40f" : "5px solid #2ecc71";
     // Ocultar botones
     elemento.querySelector('.btn-progreso').style.display = 'none';
     elemento.querySelector('.btn-finalizado').style.display = 'none';
