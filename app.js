@@ -91,5 +91,20 @@ formulario.addEventListener('submit', (e) => {
     formulario.reset();
 });
 
-// 5. MOTOR DE CARGA (¡Debe ir al final!)
+// MOTOR DE CARGA
 tareas.forEach(t => renderizarTarea(t));
+
+//Filtro de búsqueda
+inputBusqueda.addEventListener('input', () => {
+    const texto = inputBusqueda.value.toLowerCase();
+    
+    document.querySelectorAll('.tarea-item').forEach(li => {
+        const titulo = li.querySelector('.tarea-titulo').textContent.toLowerCase();
+        
+        if (titulo.includes(texto)) {
+            li.style.display = 'flex'; 
+        } else {
+            li.style.display = 'none';
+        }
+    });
+});
