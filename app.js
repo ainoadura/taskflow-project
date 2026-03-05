@@ -1,4 +1,3 @@
-// 1. SELECTORES Y CARGA INICIAL
 const formulario = document.querySelector('#miFormulario');
 const listaTareas = document.querySelector('#listaTareas');
 const listaResumen = document.querySelector('#listaResumen');
@@ -7,7 +6,7 @@ const inputBusqueda = document.querySelector('#inputBusqueda');
 // Cargamos de localStorage o empezamos vacío
 let tareas = JSON.parse(localStorage.getItem('misTareas')) || [];
 
-// 2. FUNCIÓN DE RENDERIZADO (Dibuja y activa botones)
+// FUNCIÓN DE RENDERIZADO
 function renderizarTarea(tarea) {
     const nuevaLi = document.createElement('li');
     nuevaLi.className = 'tarea-item';
@@ -61,8 +60,7 @@ function actualizarTodo(elemento, nuevoEstado) {
 
 function aplicarEstilosAside(elemento, estado) {
     elemento.style.transition = "none"; // Sin suavizados
-    elemento.style.borderLeft = (estado === 'progreso') ? "5px solid #f1c40f" : "5px solid #2ecc71";
-    // Ocultar botones para limpiar el aside
+    // Ocultar botones
     elemento.querySelector('.btn-progreso').style.display = 'none';
     elemento.querySelector('.btn-finalizado').style.display = 'none';
     elemento.querySelector('.btn-eliminar').style.display = 'inline-block'; // Dejar eliminar si quieres
