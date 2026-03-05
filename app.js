@@ -1,17 +1,22 @@
+//SELECTORES
 const formulario = document.querySelector('#miFormulario');
 const listaTareas = document.querySelector('#listaTareas');
 const listaResumen = document.querySelector('#listaResumen');
 const inputBusqueda = document.querySelector('#inputBusqueda');
 
-// Cargamos de localStorage o empezamos vacío
+//CARGA INICIAL
 let tareas = JSON.parse(localStorage.getItem('misTareas')) || [];
 
-// FUNCIÓN DE RENDERIZADO
+//FUNCIÓN DE GUARDADO
+function guardarEnDisco() {
+    localStorage.setItem('misTareas', JSON.stringify(tareas));
+}
+
+//FUNCIÓN PARA DIBUJAR TAREAS
 function renderizarTarea(tarea) {
     const nuevaLi = document.createElement('li');
     nuevaLi.className = 'tarea-item';
-    nuevaLi.dataset.id = tarea.id; // Guardamos el ID para identificarla
-
+    
     nuevaLi.innerHTML = `
         <div class="tarea-info">
             <label class="tarea-titulo">${tarea.titulo}</label>
@@ -25,7 +30,7 @@ function renderizarTarea(tarea) {
         </div>
     `;
 
-    // Lógica para decidir dónde colocarla al cargar/mover
+    // UBICACIÓN INICIAL AL CARGAR
     if (tarea.estado === 'progreso' || tarea.estado === 'finalizado') {
         listaResumen.appendChild(nuevaLi);
         aplicarEstilosAside(nuevaLi, tarea.estado);
@@ -33,15 +38,20 @@ function renderizarTarea(tarea) {
         listaTareas.appendChild(nuevaLi);
     }
 
-    // EVENTOS DE BOTONES
+    // EVENTOS DE CLIC (MOVIMIENTO MANUAL)
     nuevaLi.querySelector('.btn-progreso').addEventListener('click', () => {
         tarea.estado = 'progreso';
-        actualizarTodo(nuevaLi, 'progreso');
+        guardarEnDisco();
+        listaResumen.appendChild(nuevaLi);
+        aplicarEstilosAside(nuevaLi, 'progreso');
     });
 
+    // Cambiado selector a .btn-finalizado
     nuevaLi.querySelector('.btn-finalizado').addEventListener('click', () => {
         tarea.estado = 'finalizado';
-        actualizarTodo(nuevaLi, 'finalizado');
+        guardarEnDisco();
+        listaResumen.appendChild(nuevaLi);
+        aplicarEstilosAside(nuevaLi, 'finalizado');
     });
 
     nuevaLi.querySelector('.btn-eliminar').addEventListener('click', () => {
@@ -51,37 +61,27 @@ function renderizarTarea(tarea) {
     });
 }
 
-// 3. FUNCIONES AUXILIARES (Para evitar errores de duplicidad)
-function actualizarTodo(elemento, nuevoEstado) {
-    listaResumen.appendChild(elemento); // Mueve el nodo al aside
-    aplicarEstilosAside(elemento, nuevoEstado);
-    guardarEnDisco();
-}
-
+//ESTILOS ASIDE
 function aplicarEstilosAside(elemento, estado) {
-    elemento.style.transition = "none";
     elemento.style.borderLeft = (estado === 'progreso') ? "5px solid #f1c40f" : "5px solid #2ecc71";
-    // Ocultar botones
     elemento.querySelector('.btn-progreso').style.display = 'none';
     elemento.querySelector('.btn-finalizado').style.display = 'none';
-    elemento.querySelector('.btn-eliminar').style.display = 'inline-block'; // Dejar eliminar si quieres
 }
 
-function guardarEnDisco() {
-    localStorage.setItem('misTareas', JSON.stringify(tareas));
-}
-
-// 4. EVENTOS GLOBALES
+//EVENTO SUBMIT
 formulario.addEventListener('submit', (e) => {
     e.preventDefault();
-    const titulo = document.querySelector('#inputTarea').value.trim();
-    if (!titulo) return;
+    const tituloInput = document.querySelector('#inputTarea');
+    const categoriaInput = document.querySelector('#inputCategoria');
+    const prioridadInput = document.querySelector('#prioridadTarea');
+
+    if (!tituloInput.value.trim()) return;
 
     const nuevaTarea = {
         id: Date.now(),
-        titulo: titulo,
-        categoria: document.querySelector('#inputCategoria').value.trim() || "General",
-        prioridad: document.querySelector('#prioridadTarea').value,
+        titulo: tituloInput.value.trim(),
+        categoria: categoriaInput.value.trim() || "General",
+        prioridad: prioridadInput.value,
         estado: 'pendiente'
     };
 
@@ -91,20 +91,18 @@ formulario.addEventListener('submit', (e) => {
     formulario.reset();
 });
 
-// MOTOR DE CARGA
-tareas.forEach(t => renderizarTarea(t));
-
-//Filtro de búsqueda
+//FILTRO DE BÚSQUEDA (IMPLEMENTADO)
 inputBusqueda.addEventListener('input', () => {
     const texto = inputBusqueda.value.toLowerCase();
-    
-    document.querySelectorAll('.tarea-item').forEach(li => {
+    const items = document.querySelectorAll('.tarea-item');
+
+    items.forEach(li => {
         const titulo = li.querySelector('.tarea-titulo').textContent.toLowerCase();
-        
-        if (titulo.includes(texto)) {
-            li.style.display = 'flex'; 
-        } else {
-            li.style.display = 'none';
-        }
+        // Si el texto de búsqueda está en el título, mostramos; si no, ocultamos
+        li.style.display = titulo.includes(texto) ? 'flex' : 'none';
     });
 });
+
+//CARGAR TAREAS AL INICIAR
+tareas.forEach(t => renderizarTarea(t));
+
