@@ -122,8 +122,30 @@
             box-shadow: var(--sombra-suave);
         }
 
+        .btn-progreso {
+            background-color: var(--texto-media);
+            color: var(--color-texto);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-finalizado {
+            background-color: var(--texto-baja);
+            color: var(--color-texto);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
         .btn-eliminar {
-            background-color: var(--color-acento);
+            background-color: var(--texto-alta);
             color: var(--color-texto);
             border: none;
             padding: 4px 12px;
@@ -134,8 +156,32 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
+        .btn-progreso:hover {
+            background-color: var(--texto-media);
+        } 
+        .btn-finalizado:hover {
+            background-color: var(--texto-baja);
+        } 
         .btn-eliminar:hover {
-            background-color: var(--color-acento);
+            background-color: var(--texto-alta);
+        }
+
+        .buscador-container {
+            margin-bottom: 20px;
+        }
+
+        #inputBusqueda {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #eee;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #inputBusqueda:focus {
+            border-color: var(--color-acento);
         }
 
         /* Alineación de Checkbox + Texto */
@@ -199,6 +245,10 @@
             flex: 1; /* Ocupa un ancho fijo o proporcional */
             min-width: 250px;
         }
+        #listaResumen {
+            min-height: 50px;
+            display: block !important;
+        }
 
         main {
             flex: 3; /* Ocupa el resto del espacio */
@@ -237,6 +287,11 @@
                 <div class="cabecera-seccion">
                     <h2>Mis Tareas</h2>
                     <span class="contador">Añadir tareas:</span>
+
+                    <!-- Mi buscador -->
+                    <div class="buscador-container">
+                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea...">
+                    </div>
                 </div>
 
                 <!-- El formulario -->
@@ -259,26 +314,9 @@
             </section>
         </main>
 
-        <aside>
+        <aside style="border: 2px solid #ccc; min-height: 200px; padding: 10px;">
             <h2>Estado de las Tareas</h2>
-            <!--
-            <div class="tarjeta-stats">
-                <div class="stat-item">
-                    <span class="stat-numero">1</span>
-                    <span class="stat-label">🔴 Prioridad: Alta</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-numero">1</span>
-                    <span class="stat-label">🟡 Prioridad: Media</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-numero">1</span>
-                    <span class="stat-label">🟢 Prioridad: Baja</span>
-                </div>
-        
-             </div> 
-             -->
-             <ul id="listaTareas", style="border: none; min-height: 50px;"></ul>
+            <ul id="listaResumen", class="lista-resumen", style="list-style: none; padding: 0;"></ul>
         </aside>
     </div>
     <footer>
