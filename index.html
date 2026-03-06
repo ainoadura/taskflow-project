@@ -17,8 +17,29 @@
 
     <header class="h-[200px] flex items-center justify-center text-white bg-cover bg-center shadow-inner" 
         style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');">
-        <h1 class="font-serif italic text-6xl text-center text-white drop-shadow-lg mb-1 leading-tight">Puntada Maestra</h1> 
+        <h1 class="font-serif italic text-6xl text-center text-white drop-shadow-lg mb-1 leading-tight">
+            Puntada Maestra
+        </h1> 
+
+        <!-- Llamamos a Tailwind y configuramos el modo oscuro-->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+        tailwind.config = { darkMode: 'class', }
+        </script>
     </header>
+
+    <!-- BOTÓN MODO OSCURO -->
+    <div class="flex justify-end p-2 -mt-6 relative z-10 mr-4">
+        <button id="btnDarkMode" class="bg-white dark:bg-slate-800 p-2 rounded-full shadow-xl border-2 border-[#fef3c7] hover:scale-110 transition-all group">
+            <svg class="block dark:hidden w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+            </svg>
+
+            <svg class="hidden dark:block w-4 h-4 text-amber-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+            </svg>
+        </button>
+    </div>
 
     <div class="contenedor-app flex flex-col md:flex-row gap-4 p-4 min-h-screen items-stretch">
         <main class="md:flex-[3] flex flex-col">
@@ -29,31 +50,39 @@
                     </h2>
 
                     <!-- Mi buscador -->
-                    <div class="buscador-container">
-                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea..." class="w-full px-5 py-3 border-2 border-slate-200 rounded-full outline-none focus:border-[#f59e0b] text-black bg-white transition-all">
+                    <div class="buscador-container bg-transparent">
+                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea..." class="w-full px-5 py-3 border-2 border-slate-200 rounded-full outline-none focus:border-[#f59e0b] text-black bg-white transition-all dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:rounded-full
+                        transition-all duration-500 focus:shadow-[0_0_15px_rgba(245,158,11,0.3)] focus:border-[#f59e0b]">
                     </div>
                     <br>
                 </div>
 
                 <!-- El formulario -->
-                 <span class="contador block mb-4 font-semibold text-black">Añadir tareas:</span>
-                <form id="miFormulario" class="flex flex-wrap gap-3 mb-6">
-                    <input type="text" id="inputTarea" placeholder="Escribe una tarea" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white focus:border-white">
-                    <input type="text" id="inputCategoria" placeholder="Descripción" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white">
+                <span class="contador block mb-4 font-semibold text-black text-slate-900 dark:text-slate-200">Añadir tareas:</span>
+                <form id="miFormulario" class="flex flex-wrap gap-4 mb-8">
+                    <input type="text" id="inputTarea" placeholder="Escribe una tarea" class="flex-1 p-3 rounded-x1 border-2 border-white/50 rounded-xl outline-none text-black bg-white focus:border-white dark:bg-slate-800 dark:text-white dark:border-white/20
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/50 focus:border-[#fef3c7] outline-none">
+                    <input type="text" id="inputCategoria" placeholder="Descripción" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white dark:bg-slate-800 dark:text-white dark:border-white/20 
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/50 focus:border-[#fef3c7] outline-none">
             
                     <!-- Desplegable de prioridad -->
-                    <select id="prioridadTarea" class="p-3 border-2 border-white/50 rounded-xl text-black bg-white">
+                    <select id="prioridadTarea" class="p-3 border-2 border-white/50 rounded-xl text-black bg-white dark:bg-slate-800 dark:text-white dark:border-white/20 
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/30 outline-none hover:cursor-pointer">
+                        <!-- Opción en blanco/bloqueada -->
+                        <option value="" disabled selected hidden>Prioridad</option>
+
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
                     </select>
 
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition-all">
+                    <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded-lg font-bold transition-all dark:bg-blue-300 dark:hover:bg-blue-200 dark:text-black shadow-md 
+                    transition-all hover:scale-105 active:scale-95 hover:brightness-110 shadow-md hover:shadow-lg">
                         Agregar
                     </button>
                 </form>
 
-                <ul id="listaTareas", class="lista-tareas"></ul>
+                <ul id="listaTareas", class="lista-tareas space-y-3"></ul>
                 
             </section>
         </main>
@@ -62,7 +91,7 @@
             <h2 class="text-xl font-bold mb-4 text-black dark:text-white">
                 Estado de las Tareas
             </h2>
-            <ul id="listaResumen" class="list-none p-0"></ul>
+            <ul id="listaResumen" class="space-y-3"></ul>
         </aside>
 
 
