@@ -1,0 +1,32 @@
+/* 1. Las directivas base de Tailwind (Imprescindibles) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2. Tus estilos específicos que no se pueden poner fácilmente en el HTML */
+@layer components { 
+    .badge-alta {
+        background-color: #fef3c7 !important;
+        color: #991b1b !important;
+    }
+
+    .badge-media {
+        background-color: #fef3c7 !important;
+        color: #92400e !important;
+    }
+
+    .badge-baja {
+        background-color: #fef3c7 !important;
+        color: #12941a !important;
+    }
+
+    /* Estilos para los botones de acción dentro de las tareas */
+    .btn-progreso { @apply bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+    .btn-finalizado { @apply bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+    .btn-eliminar { @apply bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+}
+
+/* 3. Fuentes especiales (Si no las cargaste en el HTML) */
+h1 {
+    font-family: 'Playfair Display', serif;
+}

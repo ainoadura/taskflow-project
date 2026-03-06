@@ -15,20 +15,29 @@ function guardarEnDisco() {
 //FUNCIÓN PARA DIBUJAR TAREAS
 function renderizarTarea(tarea) {
     const nuevaLi = document.createElement('li');
-    nuevaLi.className = 'tarea-item';
+    nuevaLi.className = 'flex justify-between items-center p-4 bg-white dark:bg-[#1e293b] rounded-xl mb-3 shadow-sm border border-transparent dark:border-slate-700 transition-all hover:-translate-y-0.5 hover:shadow-md';
     
     nuevaLi.innerHTML = `
-        <div class="tarea-info">
-            <label class="tarea-titulo">${tarea.titulo}</label>
-            <span class="tarea-categoria">${tarea.categoria}</span>
-        </div>
-        <div class="tarea-acciones">
-            <span class="badge badge-${tarea.prioridad.toLowerCase()}">${tarea.prioridad}</span>
-            <button class="btn-progreso">PROGRESO</button>
-            <button class="btn-finalizado">FINALIZADO</button>
-            <button class="btn-eliminar">ELIMINAR</button>
-        </div>
-    `;
+    <div class="tarea-info flex flex-col">
+        <label class="tarea-titulo font-bold !text-black dark:!text-white">${tarea.titulo}</label>
+        <span class="tarea-categoria text-sm text-slate-500 dark:text-slate-400">${tarea.categoria}</span>
+    </div>
+    <div class="tarea-acciones flex gap-2">
+        <span class="badge-${tarea.prioridad.toLowerCase()} px-3 py-1 rounded-full text-[10px] font-bold uppercase shadow-sm">${tarea.prioridad}</span>
+        
+        <button class="btn-progreso bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:saturate-150 hover:shadow-inner active:scale-95">
+            PROGRESO
+        </button>
+        <button class="btn-finalizado bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:saturate-150 hover:shadow-inner active:scale-95">
+            FINALIZADO
+        </button>
+        <button class="btn-eliminar bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:brightness-125 hover:shadow-md active:rotate-3 active:scale-95">
+            ELIMINAR
+        </button>
+
+    </div>
+`;
+
 
     // UBICACIÓN INICIAL AL CARGAR
     if (tarea.estado === 'progreso' || tarea.estado === 'finalizado') {
@@ -63,10 +72,20 @@ function renderizarTarea(tarea) {
 
 //ESTILOS ASIDE
 function aplicarEstilosAside(elemento, estado) {
-    elemento.style.borderLeft = (estado === 'progreso') ? "5px solid #f1c40f" : "5px solid #2ecc71";
-    elemento.querySelector('.btn-progreso').style.display = 'none';
-    elemento.querySelector('.btn-finalizado').style.display = 'none';
+    const btnProgreso = elemento.querySelector('.btn-progreso');
+    const btnFinalizado = elemento.querySelector('.btn-finalizado');
+    
+    btnProgreso.classList.add('hidden');
+    btnFinalizado.classList.add('hidden');
+
+    elemento.style.borderLeftWidth = "4px"; 
+    elemento.style.borderLeftColor = (estado === 'progreso') ? "#f1c40f" : "#2ecc71";
+    
+    const titulo = elemento.querySelector('.tarea-titulo');
+    titulo.classList.remove('line-through', 'opacity-50');
+    elemento.classList.remove('opacity-80');
 }
+
 
 //EVENTO SUBMIT
 formulario.addEventListener('submit', (e) => {
@@ -94,7 +113,7 @@ formulario.addEventListener('submit', (e) => {
 //FILTRO DE BÚSQUEDA (IMPLEMENTADO)
 inputBusqueda.addEventListener('input', () => {
     const texto = inputBusqueda.value.toLowerCase();
-    const items = document.querySelectorAll('.tarea-item');
+    const items = listaTareas.querySelectorAll('li');
 
     items.forEach(li => {
         const titulo = li.querySelector('.tarea-titulo').textContent.toLowerCase();
@@ -106,3 +125,21 @@ inputBusqueda.addEventListener('input', () => {
 //CARGAR TAREAS AL INICIAR
 tareas.forEach(t => renderizarTarea(t));
 
+// --- LÓGICA DE MODO OSCURO ---
+const btnDarkMode = document.getElementById('btnDarkMode');
+
+if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+}
+
+if (btnDarkMode) {
+    btnDarkMode.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        
+        if (document.documentElement.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}

@@ -8,324 +8,96 @@
     <link rel="icon" type="image/png" href="img/icono.png">
     <!-- LINK PARA LA FUENTE DE LA CABECERA -->
     <link href="https://fonts.googleapis.com" rel="stylesheet">
-
-    <!-- Definimos variables CSS -->
-     <style>
-        :root {
-            /* Paleta de Colores */
-            --color-primario: #83bdf7;       /* Azul principal */
-            --color-secundario: #b38ffa;     /* Morado claro secundario */
-            --color-acento: #f59e0b;         /* Naranja para resaltar */
-            --color-texto: #000000;           /* Blanco para lectura */
-            --color-fondo: #ffffff;          /* Blanco de fondo */
-
-            /* Fuentes */
-            --fuente-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --tamano-h1: 2rem;
-            --tamano-cuerpo: 1rem;
-
-            /* Espaciados y Bordes */
-            --espacio-pequeno: 8px;
-            --espacio-medio: 16px;
-            --espacio-grande: 32px;
-            --radio-borde: 12px;
-            
-            /* Sombras para dar profundidad de "App" */
-            --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-    
-        body {
-            font-family: var(--fuente-principal);
-            color: var(--color-texto);
-            background-color: var(--color-fondo);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            /* Ruta de tu imagen */
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');
-            background-size: cover;       /* Ajusta la imagen al ancho y alto */
-            background-position: center;  /* Centra la foto */
-            height: 200px;                /* Altura del banner */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: whitesmoke;                 /* Texto blanco sobre la imagen */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        section {
-            background-color: var(--color-primario);
-            margin: var(--espacio-medio);
-            padding: var(--espacio-grande);
-            border-radius: var(--radio-borde);
-            box-shadow: var(--sombra-suave);
-        }
-
-        aside {
-            background-color: var(--color-secundario);
-            margin: var(--espacio-medio);
-            padding: var(--espacio-grande);
-            border-radius: var(--radio-borde);
-            box-shadow: var(--sombra-suave);
-        }
-
-        footer {
-            background-color: var(--color-fondo);
-            margin: var(--espacio-medio);
-            padding: var(--espacio-grande);
-            border-radius: var(--radio-borde);
-            box-shadow: var(--sombra-suave);
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif; font-style: italic; /* Cambia aquí según tu elección */
-            font-size: 4rem;
-            color: whitesmoke;
-            margin-bottom: 0.2em; /* Espacio elegante con el subtítulo */
-            line-height: 1.1;     /* Ajusta el salto de línea interno */
-            text-align: center;
-        }
-
-
-        /*Maquetar la lista de tareas*/
-        :root {
-            /* Añadimos colores para los badges */
-            --color-alta: #fef3c7;
-            --texto-alta: #991b1b;
-            --color-media: #fef3c7;
-            --texto-media: #92400e;
-            --color-baja: #fef3c7;
-            --texto-baja: #12941A;
-        }
-
-        .lista-tareas {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tarea-item {
-            display: flex; /* Activa Flexbox */
-            justify-content: space-between; /* Título a la izquierda, Badge a la derecha */
-            align-items: center; /* Alineación vertical perfecta */
-            padding: var(--espacio-medio);
-            background: var(--color-fondo);
-            border-radius: var(--radio-borde);
-            margin-bottom: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .tarea-item:hover {
-            background-color: #f8fafc;
-            transform: translateY(-2px);
-            box-shadow: var(--sombra-suave);
-        }
-
-        .btn-progreso {
-            background-color: var(--texto-media);
-            color: var(--color-texto);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-finalizado {
-            background-color: var(--texto-baja);
-            color: var(--color-texto);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-eliminar {
-            background-color: var(--texto-alta);
-            color: var(--color-texto);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-progreso:hover {
-            background-color: var(--texto-media);
-        } 
-        .btn-finalizado:hover {
-            background-color: var(--texto-baja);
-        } 
-        .btn-eliminar:hover {
-            background-color: var(--texto-alta);
-        }
-
-        .buscador-container {
-            width: 100%;                    
-            margin-bottom: 20px;
-            display: flex;
-   
-        }
-
-        #inputBusqueda {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 12px 20px;
-            border: 2px solid #eee;
-            border-radius: 25px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        #inputBusqueda:focus {
-            border-color: var(--color-acento);
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Alineación de Checkbox + Texto */
-        .tarea-check {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .tarea-check input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .tarea-info {
-            display: flex;
-            flex-direction: column; /* Apila título y categoría uno sobre otro */
-            gap: 4px; /* Espacio pequeño entre ellos */
-        }
-
-        .tarea-titulo {
-            display: block;
-            font-weight: 600;
-            color: var(--color-texto);
-            cursor: pointer;
-        }
-
-        .tarea-categoria {
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        /* Estilo de los Badges */
-        .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .badge-alta { background: var(--color-alta); color: var(--texto-alta); }
-        .badge-media { background: var(--color-media); color: var(--texto-media); }
-        .badge-baja { background: var(--color-baja); color: var(--texto-baja); }
-
-        /* Estructura para pantallas pequeñas (móvil) */
-        .contenedor-app {
-            display: flex;
-            flex-direction: column; /* Apilados uno debajo del otro */
-        }
-
-        /* Estructura base para pantallas grandes (Escritorio) */
-        .contenedor-app {
-            display: flex;
-            flex-direction: row; /* Uno al lado del otro */
-            gap: var(--espacio-pequeno);
-        }
-
-        aside {
-            flex: 1; /* Ocupa un ancho fijo o proporcional */
-            min-width: 250px;
-        }
-        #listaResumen {
-            min-height: 50px;
-            display: block !important;
-        }
-
-        main {
-            flex: 3; /* Ocupa el resto del espacio */
-        }
-
-        /* --- MEDIA QUERY PARA MÓVILES --- */
-        @media (max-width: 768px) {
-            .contenedor-app {
-                display:flex;
-                flex-direction: column; /* Apila la barra lateral debajo del contenido */
-                box-sizing: border-box;
-            }
-
-            aside {
-                min-width: unset;
-                box-sizing: border-box;
-            }
-            
-            .tarea-item {
-                flex-direction: column; /* Las tareas también se apilan si son muy anchas */
-                align-items: flex-start;
-            }
-        }
-    </style>
-
+    <!-- Definimos variables CSS en nuestro documento style.css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Línea para activar todo -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-white dark:bg-slate-950 text-black dark:text-white font-sans transition-colors">
 
-    <header>
-        <h1>Puntada Maestra</h1> 
+    <header class="h-[200px] flex items-center justify-center text-white bg-cover bg-center shadow-inner" 
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');">
+        <h1 class="font-serif italic text-6xl text-center text-white drop-shadow-lg mb-1 leading-tight">
+            Puntada Maestra
+        </h1> 
+
+        <!-- Llamamos a Tailwind y configuramos el modo oscuro-->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+        tailwind.config = { darkMode: 'class', }
+        </script>
     </header>
 
-    <div class="contenedor-app", style="display: flex;">
-        <main>
-            <section id="inicio">
+    <!-- BOTÓN MODO OSCURO -->
+    <div class="flex justify-end p-2 -mt-6 relative z-10 mr-4">
+        <button id="btnDarkMode" class="bg-white dark:bg-slate-800 p-2 rounded-full shadow-xl border-2 border-[#fef3c7] hover:scale-110 transition-all group">
+            <svg class="block dark:hidden w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+            </svg>
+
+            <svg class="hidden dark:block w-4 h-4 text-amber-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="contenedor-app flex flex-col md:flex-row gap-4 p-4 min-h-screen items-stretch">
+        <main class="md:flex-[3] flex flex-col">
+            <section id="inicio" class="bg-[#83bdf7] dark:bg-[#1e3a8a] p-8 rounded-xl shadow-md flex-1 text-black dark:text-white transition-colors">
                 <div class="cabecera-seccion">
-                    <h2>Mis Tareas</h2>
-                    <span class="contador">Añadir tareas:</span>
+                    <h2 class="text-2xl font-bold text-black-950 dark:text-white mb-4">
+                        Mis Tareas
+                    </h2>
 
                     <!-- Mi buscador -->
-                    <div class="buscador-container">
-                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea...">
+                    <div class="buscador-container bg-transparent">
+                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea..." class="w-full px-5 py-3 border-2 border-slate-200 rounded-full outline-none focus:border-[#f59e0b] text-black bg-white transition-all dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:rounded-full
+                        transition-all duration-500 focus:shadow-[0_0_15px_rgba(245,158,11,0.3)] focus:border-[#f59e0b]">
                     </div>
+                    <br>
                 </div>
 
                 <!-- El formulario -->
-                <form id="miFormulario">
-                    <input type="text" id="inputTarea" placeholder="Escribe una tarea">
-                    <input type="text" id="inputCategoria" placeholder="Descripción">
-
+                <span class="contador block mb-4 font-semibold text-black text-slate-900 dark:text-slate-200">Añadir tareas:</span>
+                <form id="miFormulario" class="flex flex-wrap gap-4 mb-8">
+                    <input type="text" id="inputTarea" placeholder="Escribe una tarea" class="flex-1 p-3 rounded-x1 border-2 border-white/50 rounded-xl outline-none text-black bg-white focus:border-white dark:bg-slate-800 dark:text-white dark:border-white/20
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/50 focus:border-[#fef3c7] outline-none">
+                    <input type="text" id="inputCategoria" placeholder="Descripción" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white dark:bg-slate-800 dark:text-white dark:border-white/20 
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/50 focus:border-[#fef3c7] outline-none">
+            
                     <!-- Desplegable de prioridad -->
-                    <select id="prioridadTarea">
+                    <select id="prioridadTarea" class="p-3 border-2 border-white/50 rounded-xl text-black bg-white dark:bg-slate-800 dark:text-white dark:border-white/20 
+                    transition-all focus:ring-4 focus:ring-[#fef3c7]/30 outline-none hover:cursor-pointer">
+                        <!-- Opción en blanco/bloqueada -->
+                        <option value="" disabled selected hidden>Prioridad</option>
+
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
                     </select>
 
-                    <button type="submit">Agregar</button>
+                    <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded-lg font-bold transition-all dark:bg-blue-300 dark:hover:bg-blue-200 dark:text-black shadow-md 
+                    transition-all hover:scale-105 active:scale-95 hover:brightness-110 shadow-md hover:shadow-lg">
+                        Agregar
+                    </button>
                 </form>
 
-                <ul id="listaTareas", class="lista-tareas"></ul>
+                <ul id="listaTareas", class="lista-tareas space-y-3"></ul>
                 
             </section>
         </main>
 
-        <aside style="border: 2px solid #ccc; min-height: 200px; padding: 10px;">
-            <h2>Estado de las Tareas</h2>
-            <ul id="listaResumen", class="lista-resumen", style="list-style: none; padding: 0;"></ul>
+        <aside class="md:flex-1 bg-[#b38ffa] dark:bg-[#4c1d95] p-8 rounded-xl shadow-sm !text-black dark:!text-white font-medium transition-colors">
+            <h2 class="text-xl font-bold mb-4 text-black dark:text-white">
+                Estado de las Tareas
+            </h2>
+            <ul id="listaResumen" class="space-y-3"></ul>
         </aside>
+
+
     </div>
-    <footer>
-        <p>&copy; 2024</p>
+    <footer class="bg-white dark:bg-slate-800 m-2 p-3 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">&copy; 2026 - Puntada Maestra</p>
     </footer>
     <script src="app.js"></script>    
 </body>
