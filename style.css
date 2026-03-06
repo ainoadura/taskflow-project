@@ -21,26 +21,25 @@
             --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
     
-        body {
+       /* body {
             font-family: var(--fuente-principal);
             color: var(--color-texto);
             background-color: var(--color-fondo);
             margin: 0;
             line-height: 1.6;
-        }
+        } 
 
         header {
-            /* Ruta de tu imagen */
             background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');
-            background-size: cover;       /* Ajusta la imagen al ancho y alto */
-            background-position: center;  /* Centra la foto */
-            height: 200px;                /* Altura del banner */
+            background-size: cover;       
+            background-position: center;  
+            height: 200px;               
             display: flex;
             align-items: center;
             justify-content: center;
-            color: whitesmoke;                 /* Texto blanco sobre la imagen */
+            color: whitesmoke;                 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
+        } 
 
         section {
             background-color: var(--color-primario);
@@ -67,18 +66,17 @@
         }
 
         h1 {
-            font-family: 'Playfair Display', serif; font-style: italic; /* Cambia aquí según tu elección */
+            font-family: 'Playfair Display', serif; font-style: italic; 
             font-size: 4rem;
             color: whitesmoke;
-            margin-bottom: 0.2em; /* Espacio elegante con el subtítulo */
-            line-height: 1.1;     /* Ajusta el salto de línea interno */
+            margin-bottom: 0.2em; 
+            line-height: 1.1;     
             text-align: center;
-        }
+        } */
 
 
-        /*Maquetar la lista de tareas*/
+        /*Maquetar la lista de tareas
         :root {
-            /* Añadimos colores para los badges */
             --color-alta: #fef3c7;
             --texto-alta: #991b1b;
             --color-media: #fef3c7;
@@ -93,9 +91,9 @@
         }
 
         .tarea-item {
-            display: flex; /* Activa Flexbox */
-            justify-content: space-between; /* Título a la izquierda, Badge a la derecha */
-            align-items: center; /* Alineación vertical perfecta */
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
             padding: var(--espacio-medio);
             background: var(--color-fondo);
             border-radius: var(--radio-borde);
@@ -114,7 +112,7 @@
             color: var(--color-texto);
             border: none;
             padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            border-radius: 20px; 
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
@@ -125,7 +123,7 @@
             color: var(--color-texto);
             border: none;
             padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            border-radius: 20px; 
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
@@ -136,7 +134,7 @@
             color: var(--color-texto);
             border: none;
             padding: 4px 12px;
-            border-radius: 20px; /* Esto lo hace redondeado (píldora) */
+            border-radius: 20px; 
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
@@ -176,7 +174,6 @@
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Alineación de Checkbox + Texto */
         .tarea-check {
             display: flex;
             align-items: center;
@@ -191,8 +188,8 @@
 
         .tarea-info {
             display: flex;
-            flex-direction: column; /* Apila título y categoría uno sobre otro */
-            gap: 4px; /* Espacio pequeño entre ellos */
+            flex-direction: column; 
+            gap: 4px; 
         }
 
         .tarea-titulo {
@@ -207,7 +204,6 @@
             color: #64748b;
         }
 
-        /* Estilo de los Badges */
         .badge {
             padding: 4px 12px;
             border-radius: 20px;
@@ -220,21 +216,19 @@
         .badge-media { background: var(--color-media); color: var(--texto-media); }
         .badge-baja { background: var(--color-baja); color: var(--texto-baja); }
 
-        /* Estructura para pantallas pequeñas (móvil) */
         .contenedor-app {
             display: flex;
-            flex-direction: column; /* Apilados uno debajo del otro */
+            flex-direction: column; 
         }
 
-        /* Estructura base para pantallas grandes (Escritorio) */
         .contenedor-app {
             display: flex;
-            flex-direction: row; /* Uno al lado del otro */
+            flex-direction: row; 
             gap: var(--espacio-pequeno);
         }
 
         aside {
-            flex: 1; /* Ocupa un ancho fijo o proporcional */
+            flex: 1; 
             min-width: 250px;
         }
         #listaResumen {
@@ -243,14 +237,14 @@
         }
 
         main {
-            flex: 3; /* Ocupa el resto del espacio */
+            flex: 3;
         }
-
-        /* --- MEDIA QUERY PARA MÓVILES --- */
+*/
+        /* --- MEDIA QUERY PARA MÓVILES --- 
         @media (max-width: 768px) {
             .contenedor-app {
                 display:flex;
-                flex-direction: column; /* Apila la barra lateral debajo del contenido */
+                flex-direction: column; 
                 box-sizing: border-box;
             }
 
@@ -260,7 +254,37 @@
             }
             
             .tarea-item {
-                flex-direction: column; /* Las tareas también se apilan si son muy anchas */
+                flex-direction: column; 
                 align-items: flex-start;
             }
         }
+*/
+
+/* 1. Las directivas base de Tailwind (Imprescindibles) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2. Tus estilos específicos que no se pueden poner fácilmente en el HTML */
+@layer components {
+    /* Estilos para los Badges de prioridad (usando tus colores originales) */
+    .badge-alta { 
+        @apply bg-[#fef3c7] text-[#991b1b] dark:bg-red-900/20 dark:text-red-400; 
+    }
+    .badge-media { 
+        @apply bg-[#fef3c7] text-[#92400e] dark:bg-amber-900/20 dark:text-amber-400; 
+    }
+    .badge-baja { 
+        @apply bg-[#fef3c7] text-[#12941a] dark:bg-green-900/20 dark:text-green-400; 
+    }
+
+    /* Estilos para los botones de acción dentro de las tareas */
+    .btn-progreso { @apply bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+    .btn-finalizado { @apply bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+    .btn-eliminar { @apply bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all; }
+}
+
+/* 3. Fuentes especiales (Si no las cargaste en el HTML) */
+h1 {
+    font-family: 'Playfair Display', serif;
+}

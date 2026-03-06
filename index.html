@@ -9,40 +9,48 @@
     <!-- LINK PARA LA FUENTE DE LA CABECERA -->
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <!-- Definimos variables CSS en nuestro documento style.css -->
-     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Línea para activar todo -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-white dark:bg-slate-950 text-black dark:text-white font-sans transition-colors">
 
-    <header>
-        <h1>Puntada Maestra</h1> 
+    <header class="h-[200px] flex items-center justify-center text-white bg-cover bg-center shadow-inner" 
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');">
+        <h1 class="font-serif italic text-6xl text-center text-white drop-shadow-lg mb-1 leading-tight">Puntada Maestra</h1> 
     </header>
 
-    <div class="contenedor-app", style="display: flex;">
-        <main>
-            <section id="inicio">
+    <div class="contenedor-app flex flex-col md:flex-row gap-4 p-4 min-h-screen items-stretch">
+        <main class="md:flex-[3] flex flex-col">
+            <section id="inicio" class="bg-[#83bdf7] dark:bg-[#1e3a8a] p-8 rounded-xl shadow-md flex-1 text-black dark:text-white transition-colors">
                 <div class="cabecera-seccion">
-                    <h2>Mis Tareas</h2>
-                    <span class="contador">Añadir tareas:</span>
+                    <h2 class="text-2xl font-bold text-black-950 dark:text-white mb-4">
+                        Mis Tareas
+                    </h2>
 
                     <!-- Mi buscador -->
                     <div class="buscador-container">
-                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea...">
+                        <input type="text" id="inputBusqueda" placeholder="Buscar tarea..." class="w-full px-5 py-3 border-2 border-slate-200 rounded-full outline-none focus:border-[#f59e0b] text-black bg-white transition-all">
                     </div>
+                    <br>
                 </div>
 
                 <!-- El formulario -->
-                <form id="miFormulario">
-                    <input type="text" id="inputTarea" placeholder="Escribe una tarea">
-                    <input type="text" id="inputCategoria" placeholder="Descripción">
-
+                 <span class="contador block mb-4 font-semibold text-black">Añadir tareas:</span>
+                <form id="miFormulario" class="flex flex-wrap gap-3 mb-6">
+                    <input type="text" id="inputTarea" placeholder="Escribe una tarea" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white focus:border-white">
+                    <input type="text" id="inputCategoria" placeholder="Descripción" class="flex-1 p-3 border-2 border-white/50 rounded-xl outline-none text-black bg-white">
+            
                     <!-- Desplegable de prioridad -->
-                    <select id="prioridadTarea">
+                    <select id="prioridadTarea" class="p-3 border-2 border-white/50 rounded-xl text-black bg-white">
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
                     </select>
 
-                    <button type="submit">Agregar</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition-all">
+                        Agregar
+                    </button>
                 </form>
 
                 <ul id="listaTareas", class="lista-tareas"></ul>
@@ -50,13 +58,17 @@
             </section>
         </main>
 
-        <aside style="border: 2px solid #ccc; min-height: 200px; padding: 10px;">
-            <h2>Estado de las Tareas</h2>
-            <ul id="listaResumen", class="lista-resumen", style="list-style: none; padding: 0;"></ul>
+        <aside class="md:flex-1 bg-[#b38ffa] dark:bg-[#4c1d95] p-8 rounded-xl shadow-sm !text-black dark:!text-white font-medium transition-colors">
+            <h2 class="text-xl font-bold mb-4 text-black dark:text-white">
+                Estado de las Tareas
+            </h2>
+            <ul id="listaResumen" class="list-none p-0"></ul>
         </aside>
+
+
     </div>
-    <footer>
-        <p>&copy; 2024</p>
+    <footer class="bg-white dark:bg-slate-800 m-2 p-3 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">&copy; 2026 - Puntada Maestra</p>
     </footer>
     <script src="app.js"></script>    
 </body>

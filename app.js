@@ -15,18 +15,18 @@ function guardarEnDisco() {
 //FUNCIÓN PARA DIBUJAR TAREAS
 function renderizarTarea(tarea) {
     const nuevaLi = document.createElement('li');
-    nuevaLi.className = 'tarea-item';
+    nuevaLi.className = 'flex justify-between items-center p-4 bg-white dark:bg-[#1e293b] rounded-xl mb-3 shadow-sm border border-transparent dark:border-slate-700 transition-all hover:-translate-y-0.5 hover:shadow-md';
     
     nuevaLi.innerHTML = `
-        <div class="tarea-info">
-            <label class="tarea-titulo">${tarea.titulo}</label>
-            <span class="tarea-categoria">${tarea.categoria}</span>
+        <div class="tarea-info flex flex-col">
+            <label class="tarea-titulo font-bold !text-black dark:!text-white">${tarea.titulo}</label>
+            <span class="tarea-categoria text-sm text-slate-500 dark:text-slate-400">${tarea.categoria}</span>
         </div>
-        <div class="tarea-acciones">
-            <span class="badge badge-${tarea.prioridad.toLowerCase()}">${tarea.prioridad}</span>
-            <button class="btn-progreso">PROGRESO</button>
-            <button class="btn-finalizado">FINALIZADO</button>
-            <button class="btn-eliminar">ELIMINAR</button>
+        <div class="tarea-acciones flex gap-2">
+            <span class="badge-${tarea.prioridad.toLowerCase()} px-3 py-1 rounded-full text-[10px] font-bold uppercase">${tarea.prioridad}</span>
+            <button class="btn-progreso bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all">PROGRESO</button>
+            <button class="btn-finalizado bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all">FINALIZADO</button>
+            <button class="btn-eliminar bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold hover:opacity-80 transition-all">ELIMINAR</button>
         </div>
     `;
 
@@ -94,7 +94,7 @@ formulario.addEventListener('submit', (e) => {
 //FILTRO DE BÚSQUEDA (IMPLEMENTADO)
 inputBusqueda.addEventListener('input', () => {
     const texto = inputBusqueda.value.toLowerCase();
-    const items = document.querySelectorAll('.tarea-item');
+    const items = listaTareas.querySelectorAll('li');
 
     items.forEach(li => {
         const titulo = li.querySelector('.tarea-titulo').textContent.toLowerCase();
