@@ -124,7 +124,7 @@ function manejarEliminacionTarea(id) {
     renderizarTodo();
 }
 
-// --- NUEVA FUNCIONALIDAD: EDICIÓN DE TAREAS ---
+// --- EDICIÓN DE TAREAS ---
 function manejarEdicionTarea(tarea) {
     const nuevoTitulo = prompt("Editar nombre de la prenda/tarea:", tarea.titulo);
     if (nuevoTitulo !== null && nuevoTitulo.trim().length >= 3) {
