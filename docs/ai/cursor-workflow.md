@@ -62,7 +62,6 @@ El servidor se añade en **Settings > Features > MCP Servers**.
     }
   }
 }
-```
 
 ### 🧪 Bitácora de Verificación: Consultas MCP GitHub
 Se han realizado las siguientes pruebas de conectividad para validar el flujo de trabajo entre **Cursor** y la **API de GitHub**:
