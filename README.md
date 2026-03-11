@@ -4,9 +4,9 @@
 
 ---
 
-## 📝 Gestor de Tareas Dinámico
+## 📝 Gestión Inteligente para el Taller de Costura
 
-Una aplicación web interactiva para gestionar tareas diarias, permitiendo clasificarlas por prioridad y hacer un seguimiento de su estado (Pendiente, En Progreso o Finalizada).
+**Puntada Maestra** es un gestor de tareas dinámico diseñado para digitalizar el flujo de trabajo en talleres de corte y confección. Permite organizar encargos, priorizar urgencias y realizar un seguimiento preciso de cada prenda desde la recepción hasta la entrega final.
 
 ## 🚀 Características
 
@@ -17,7 +17,16 @@ Una aplicación web interactiva para gestionar tareas diarias, permitiendo clasi
 - **Buscador en Tiempo Real:** Filtra tareas instantáneamente por su título.
 - **Diseño Responsivo:** Interfaz adaptada con Flexbox.
 
-## 🛠️ Tecnologías utilizadas
+## ✨ Funcionalidades Pro (Implementadas con IA)
+
+Tras una fase de experimentación y optimización asistida por IA, se han integrado las siguientes mejoras de arquitectura:
+
+- **🔍 Búsqueda Omnicanal:** Filtro inteligente en tiempo real que rastrea coincidencias tanto en el **título de la prenda** como en su **categoría/descripción**.
+- **⚖️ Algoritmo de Priorización:** Ordenación automática basada en un mapa de pesos numéricos. Las tareas **Altas** (urgentes) encabezan siempre la lista, seguidas de Media y Baja.
+- **📝 Edición In situ:** Sistema de edición rápida mediante **doble clic** en la información de la tarea, permitiendo corregir detalles sin eliminar el registro.
+- **🔄 Flujo Inmutable:** Gestión de estados (Pendiente, Progreso, Finalizado) mediante una arquitectura que protege la integridad de los datos en `LocalStorage`.
+
+## 🛠️ Stack Tecnológico
 
 * **HTML5:** Estructura semántica (Main, Aside, Sections).
 * **CSS3:** Variables personalizadas, Flexbox y diseño de componentes.
@@ -67,4 +76,29 @@ Una aplicación web interactiva para gestionar tareas diarias, permitiendo clasi
 - **Legibilidad:** Combinación de colores optimizada para usuarios con baja visión o en condiciones de iluminación variable.
 
 ---
+
+## 📖 Ejemplos de Uso en el Taller
+
+Aquí tienes cómo **TaskFlow** optimiza el día a día de una costurera o sastre:
+
+### 1. Gestión de Pedidos Urgentes 🔴
+Imagina que entra un cliente con un **Vestido de Novia** que necesita un ajuste para mañana.
+*   **Acción:** Creas la tarea con prioridad **"Alta"**.
+*   **Resultado:** Aunque tengas 10 tareas "Baja" creadas antes, el vestido aparecerá automáticamente en la **primera posición** de la lista para que no olvides su urgencia.
+
+### 2. Organización del Flujo de Trabajo 🧵
+Tienes varias prendas cortadas y listas para empezar a coser.
+*   **Acción:** Pulsas el botón **"PROGRESO"** en la tarea "Pantalón de Lino".
+*   **Resultado:** La tarea se mueve visualmente al panel lateral (`Aside`) y se marca con un **borde amarillo**, indicando que esa prenda ocupa actualmente tu máquina de coser.
+
+### 3. Búsqueda Rápida de Clientes 🔍
+Un cliente llamado "Carlos" llama por teléfono para preguntar por su encargo.
+*   **Acción:** Escribes "Carlos" en el buscador.
+*   **Resultado:** La interfaz oculta el resto de pedidos y te muestra solo las tareas asociadas a él (ej. "Traje Azul - Carlos"), permitiéndote darle una respuesta inmediata sobre el estado de su prenda.
+
+### 4. Corrección de Detalles (Quick-Edit) 📝
+Te das cuenta de que anotaste mal el tipo de tela en una tarea ya creada.
+*   **Acción:** Haces **doble clic** sobre el título "Falda de Algodón".
+*   **Resultado:** Se abre un cuadro donde cambias el nombre a "Falda de Seda". El cambio se guarda en el disco sin necesidad de borrar y volver a escribir la prioridad o categoría.
+
 Desarrollado por [ainoadura](https://github.com/ainoadura)
