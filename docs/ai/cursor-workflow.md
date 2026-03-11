@@ -50,7 +50,7 @@ Se ha configurado un **Fine-grained Personal Access Token** con los siguientes p
 El servidor se añade en **Settings > Features > MCP Servers**.
 
 ### Bloque JSON de configuración:
-```json
+```text
 {
   "mcpServers": {
     "github": {
