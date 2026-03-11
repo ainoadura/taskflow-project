@@ -180,7 +180,9 @@ formulario.addEventListener('submit', (e) => {
 });
 
 // --- BÚSQUEDA EN TIEMPO REAL ---
-
+inputBusqueda.addEventListener('input', () => {
+    renderizarTodo();
+});
 
 // INICIO DE LA APP
 renderizarTodo();
