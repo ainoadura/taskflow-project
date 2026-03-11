@@ -38,7 +38,14 @@ function renderizarTodo() {
     );
 
     // 2. ORDENACIÓN (Prioridad)
-    
+    tareasProcesadas.sort((a, b) => (PESOS[b.prioridad] || 0) - (PESOS[a.prioridad] || 0));
+
+    tareasProcesadas.forEach(tarea => {
+        const elemento = crearElementoTarea(tarea);
+        ubicarTareaInicial(tarea, elemento);
+        configurarEventosTarea(tarea, elemento);
+    });
+
 }
 
 //UTILIDADES DE ESTADO
