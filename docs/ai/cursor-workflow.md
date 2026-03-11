@@ -62,6 +62,7 @@ El servidor se añade en **Settings > Features > MCP Servers**.
     }
   }
 }
+``` 
 
 ---
 
