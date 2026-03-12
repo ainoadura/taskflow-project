@@ -23,7 +23,6 @@ const STORAGE_KEYS = {
 let tareas = JSON.parse(localStorage.getItem(STORAGE_KEYS.TAREAS)) || [];
 
 // --- NUEVA FUNCIÓN: RENDERIZADO DINÁMICO (FILTRO + BÚSQUEDA + ORDENACIÓN) ---
-
 function renderizarTodo() {
     listaTareas.innerHTML = '';
     listaResumen.innerHTML = '';
@@ -37,7 +36,7 @@ function renderizarTodo() {
         t.categoria.toLowerCase().includes(query)
     );
 
-    // 2. ORDENACIÓN (Prioridad)
+    // 2. ORDENACIÓN (Prioridad: ALTA, MEDIA Y BAJA. En el main y en el aside)
     tareasProcesadas.sort((a, b) => (PESOS[b.prioridad] || 0) - (PESOS[a.prioridad] || 0));
 
     tareasProcesadas.forEach(tarea => {
@@ -190,6 +189,28 @@ formulario.addEventListener('submit', (e) => {
 inputBusqueda.addEventListener('input', () => {
     renderizarTodo();
 });
+
+//CARGAR TAREAS AL INICIAR
+tareas.forEach(t => renderizarTarea(t));
+
+// --- LÓGICA DE MODO OSCURO ---
+const btnDarkMode = document.getElementById('btnDarkMode');
+
+if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+}
+
+if (btnDarkMode) {
+    btnDarkMode.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        
+        if (document.documentElement.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}
 
 // INICIO DE LA APP
 renderizarTodo();
