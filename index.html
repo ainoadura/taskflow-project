@@ -91,6 +91,29 @@
             <h2 class="text-xl font-bold mb-4 text-black dark:text-white">
                 Estado de las Tareas
             </h2>
+            <!-- NUEVOS FILTROS DE ESTADO -->
+            <div id="filtrosEstado" class="flex flex-wrap gap-2 my-4">
+                <button data-filtro="todos" class="filtro-btn active bg-blue-800 dark:bg-blue-300 text-white dark:text-black px-4 py-2 rounded-full text-xs font-bold shadow-md transition-all hover:scale-105">TODAS</button>
+                <button data-filtro="pendiente" class="filtro-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-full text-xs font-bold shadow-sm transition-all hover:scale-105">PENDIENTES</button>
+                <button data-filtro="finalizado" class="filtro-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-full text-xs font-bold shadow-sm transition-all hover:scale-105">FINALIZADAS</button>
+            </div>
+            
+            <!-- BOTONES DE ACCIÓN RÁPIDA -->
+            <div class="mt-12 mb-8 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap justify-left gap-4">
+                <!-- BOTÓN FINALIZAR TODAS -->
+                <button id="btnFinalizarTodo" class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-lg font-bold transition-all hover:scale-105 active:scale-95 shadow-md text-[10px] uppercase tracking-wider 
+                dark:bg-emerald-600/30 dark:hover:bg-emerald-500/50 dark:text-emerald-50 dark:border dark:border-emerald-400/30">
+                    FINALIZAR TAREAS PENDIENTES
+                </button>
+
+                <!-- BOTÓN BORRAR FINALIZADAS -->
+                <button id="btnBorrarFinalizadas" class="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-bold transition-all hover:scale-105 active:scale-95 shadow-md text-[10px] uppercase tracking-wider dark:bg-red-900/60 dark:hover:bg-red-800/80 dark:text-red-100 border border-transparent dark:border-red-800/50">
+                    BORRAR TAREAS FINALIZADAS
+                </button>
+            </div>
+
+
+
             <ul id="listaResumen" class="space-y-3"></ul>
         </aside>
 

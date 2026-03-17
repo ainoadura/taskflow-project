@@ -7,6 +7,11 @@ const inputTitulo = document.querySelector('#inputTarea');
 const inputCategoria = document.querySelector('#inputCategoria');
 const selectPrioridad = document.querySelector('#prioridadTarea');
 
+const STORAGE_KEYS = {
+    TAREAS: 'misTareas',
+    THEME: 'theme'
+};
+
 //CONSTANTES DE ESTADO Y STORAGE
 const ESTADOS_TAREA = {
     PENDIENTE: 'pendiente',
@@ -14,12 +19,8 @@ const ESTADOS_TAREA = {
     FINALIZADO: 'finalizado'
 };
 
-const STORAGE_KEYS = {
-    TAREAS: 'misTareas',
-    THEME: 'theme'
-};
-
 //CARGA INICIAL
+let filtroActual = 'todos';
 let tareas = JSON.parse(localStorage.getItem(STORAGE_KEYS.TAREAS)) || [];
 
 // --- NUEVA FUNCIÓN: RENDERIZADO DINÁMICO (FILTRO + BÚSQUEDA + ORDENACIÓN) ---
@@ -30,11 +31,25 @@ function renderizarTodo() {
     const query = inputBusqueda.value.toLowerCase().trim();
     const PESOS = { 'Alta': 3, 'Media': 2, 'Baja': 1 };
 
-    // 1. FILTRADO POR TEXTO (Búsqueda)
-    let tareasProcesadas = tareas.filter(t => 
-        t.titulo.toLowerCase().includes(query) || 
-        t.categoria.toLowerCase().includes(query)
-    );
+    let tareasProcesadas = tareas.filter(t => {
+        const coincideBusqueda = t.titulo.toLowerCase().includes(query) || 
+                                 t.categoria.toLowerCase().includes(query);
+        
+        // LÓGICA DE FILTRO CORREGIDA:
+        let coincideFiltro = false;
+        
+        if (filtroActual === 'todos') {
+            coincideFiltro = true;
+        } else if (filtroActual === 'pendiente') {
+            // "Pendientes" ahora incluye las que están en 'pendiente' O en 'progreso'
+            coincideFiltro = (t.estado === ESTADOS_TAREA.PENDIENTE || t.estado === ESTADOS_TAREA.PROGRESO);
+        } else if (filtroActual === 'finalizado') {
+            coincideFiltro = (t.estado === ESTADOS_TAREA.FINALIZADO);
+        }
+
+        return coincideBusqueda && coincideFiltro;
+    
+    });
 
     // 2. ORDENACIÓN (Prioridad: ALTA, MEDIA Y BAJA. En el main y en el aside)
     tareasProcesadas.sort((a, b) => (PESOS[b.prioridad] || 0) - (PESOS[a.prioridad] || 0));
@@ -87,13 +102,12 @@ function crearElementoTarea(tarea) {
     <div class="tarea-acciones flex gap-2">
         <span class="badge-${tarea.prioridad.toLowerCase()} px-3 py-1 rounded-full text-[10px] font-bold uppercase shadow-sm">${tarea.prioridad}</span>
         
-        <button class="btn-progreso bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:saturate-150 hover:shadow-inner active:scale-95">
-            PROGRESO
-        </button>
-        <button class="btn-finalizado bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:saturate-150 hover:shadow-inner active:scale-95">
-            FINALIZADO
-        </button>
-        <button class="btn-eliminar bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-300 hover:brightness-125 hover:shadow-md active:rotate-3 active:scale-95">
+        ${tarea.estado === ESTADOS_TAREA.PENDIENTE ? `
+            <button class="btn-progreso bg-[#92400e] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all hover:saturate-150">PROGRESO</button>
+            <button class="btn-finalizado bg-[#12941a] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all hover:saturate-150">FINALIZADO</button>
+        ` : ''}
+        
+        <button class="btn-eliminar bg-[#991b1b] text-white px-3 py-1 rounded-full text-[10px] font-bold transition-all hover:brightness-125">
             ELIMINAR
         </button>
     </div>
@@ -126,8 +140,18 @@ function manejarEliminacionTarea(id) {
 // --- EDICIÓN DE TAREAS ---
 function manejarEdicionTarea(tarea) {
     const nuevoTitulo = prompt("Editar nombre de la prenda/tarea:", tarea.titulo);
-    if (nuevoTitulo !== null && nuevoTitulo.trim().length >= 3) {
-        tarea.titulo = nuevoTitulo.trim();
+    if (nuevoTitulo === null || nuevoTitulo.trim().length < 3) {
+        if (nuevoTitulo !== null) alert("El título debe tener al menos 3 caracteres.");
+        return;
+    }
+
+    const nuevaDesc = prompt("Editar descripción/categoría:", tarea.categoria);
+    
+    // Si el usuario no cancela la descripción (null), procedemos a guardar
+    if (nuevaDesc !== null) {
+        tarea.titulo = nuevoTitulo;
+        tarea.categoria = nuevaDesc.trim() || "General";
+        
         guardarEnDisco();
         renderizarTodo();
     }
@@ -190,8 +214,23 @@ inputBusqueda.addEventListener('input', () => {
     renderizarTodo();
 });
 
-//CARGAR TAREAS AL INICIAR
-tareas.forEach(t => renderizarTarea(t));
+document.querySelectorAll('.filtro-btn').forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        // Cambiar estado global
+        filtroActual = e.target.dataset.filtro;
+
+        // Estética: Quitar clase active de todos y ponerla en el clicado
+        document.querySelectorAll('.filtro-btn').forEach(b => {
+            b.classList.remove('bg-blue-500', 'text-white');
+            b.classList.add('bg-slate-200', 'dark:bg-slate-700');
+        });
+        e.target.classList.add('bg-blue-500', 'text-white');
+        e.target.classList.remove('bg-slate-200', 'dark:bg-slate-700');
+
+        // Volver a dibujar la lista
+        renderizarTodo();
+    });
+});
 
 // --- LÓGICA DE MODO OSCURO ---
 const btnDarkMode = document.getElementById('btnDarkMode');
@@ -211,6 +250,53 @@ if (btnDarkMode) {
         }
     });
 }
+
+// FUNCIÓN PARA FINALIZAR TODAS LAS TAREAS VISIBLES
+function finalizarTodasLasTareas() {
+    // 1. Filtramos las tareas que NO están finalizadas todavía
+    const tareasPendientes = tareas.filter(t => t.estado !== ESTADOS_TAREA.FINALIZADO);
+
+    if (tareasPendientes.length === 0) {
+        alert("No hay tareas pendientes para finalizar.");
+        return;
+    }
+
+    if (confirm(`¿Quieres marcar las ${tareasPendientes.length} tareas como FINALIZADAS?`)) {
+        // 2. Cambiamos el estado de TODAS las tareas a finalizado
+        tareas.forEach(t => {
+            t.estado = ESTADOS_TAREA.FINALIZADO;
+        });
+
+        // 3. Guardamos y refrescamos la vista
+        guardarEnDisco();
+        renderizarTodo();
+    }
+}
+
+// EVENTO PARA EL BOTÓN
+document.querySelector('#btnFinalizarTodo')?.addEventListener('click', finalizarTodasLasTareas);
+
+// FUNCIÓN PARA BORRAR TODAS LAS TAREAS CON ESTADO FINALIZADO
+function borrarTareasFinalizadas() {
+    const finalizadas = tareas.filter(t => t.estado === ESTADOS_TAREA.FINALIZADO);
+
+    if (finalizadas.length === 0) {
+        alert("No hay tareas finalizadas para borrar.");
+        return;
+    }
+
+    if (confirm(`¿Estás seguro de que quieres borrar permanentemente las ${finalizadas.length} tareas finalizadas?`)) {
+        // Filtramos para quedarnos solo con las que NO están finalizadas
+        tareas = tareas.filter(t => t.estado !== ESTADOS_TAREA.FINALIZADO);
+        
+        guardarEnDisco();
+        renderizarTodo();
+    }
+}
+
+// EVENTO PARA EL NUEVO BOTÓN
+document.querySelector('#btnBorrarFinalizadas')?.addEventListener('click', borrarTareasFinalizadas);
+
 
 // INICIO DE LA APP
 renderizarTodo();
