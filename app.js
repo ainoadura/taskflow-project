@@ -7,16 +7,16 @@ const inputTitulo = document.querySelector('#inputTarea');
 const inputCategoria = document.querySelector('#inputCategoria');
 const selectPrioridad = document.querySelector('#prioridadTarea');
 
+const STORAGE_KEYS = {
+    TAREAS: 'misTareas',
+    THEME: 'theme'
+};
+
 //CONSTANTES DE ESTADO Y STORAGE
 const ESTADOS_TAREA = {
     PENDIENTE: 'pendiente',
     PROGRESO: 'progreso',
     FINALIZADO: 'finalizado'
-};
-
-const STORAGE_KEYS = {
-    TAREAS: 'misTareas',
-    THEME: 'theme'
 };
 
 //CARGA INICIAL
