@@ -190,9 +190,6 @@ inputBusqueda.addEventListener('input', () => {
     renderizarTodo();
 });
 
-//CARGAR TAREAS AL INICIAR
-tareas.forEach(t => renderizarTarea(t));
-
 // --- LÓGICA DE MODO OSCURO ---
 const btnDarkMode = document.getElementById('btnDarkMode');
 
