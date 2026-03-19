@@ -1,22 +1,26 @@
-import './config/env.js';
-import express from 'express';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
+const { port } = require('./config/env');
+const taskRoutes = require('./routes/task.routes');
 
 const app = express();
 
 // Configurar Middlewares (Capa de seguridad y datos)
-app.use(cors());          // Permite que tu Frontend se conecte aquí
-app.use(express.json());  // Permite que tu API entienda datos en formato JSON
+app.use(cors());          
+app.use(express.json());  
 
 // Ruta de prueba (Ruta raíz)
 app.get('/', (req, res) => {
     res.send('¡Servidor de TaskFlow encendido y reportándose!');
 });
 
-// 4. Arrancar el servidor usando el puerto del .env
-const PORT = process.env.PORT;
+// --- AQUÍ CONECTAMOS TU API ---
+// Todas las rutas de tareas vivirán bajo /api/v1/tasks
+app.use('/api/v1/tasks', taskRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en: http://localhost:${PORT}`);
+
+app.listen(port, () => {
+    console.log(`Servidor corriendo en: http://localhost:${port}`);
+    console.log(`API lista en: http://localhost:${port}/api/v1/tasks`);
     console.log('Presiona Ctrl + C para detenerlo');
 });

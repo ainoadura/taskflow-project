@@ -1,11 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
-// Validación manual de seguridad
 if (!process.env.PORT) {
-    throw new Error('El PUERTO no está definido en el archivo');
+    throw new Error('El PUERTO no está definido');
 }
 
-export const env = {
-    PORT: process.env.PORT
+module.exports = {
+    port: process.env.PORT
 };
