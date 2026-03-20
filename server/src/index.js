@@ -41,8 +41,4 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`Servidor corriendo en: http://localhost:${port}`);
-    console.log(`API lista en: http://localhost:${port}/api/v1/tasks`);
-    console.log('Presiona Ctrl + C para detenerlo');
-});
+export default app;
