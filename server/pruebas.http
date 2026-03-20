@@ -1,0 +1,17 @@
+### Prueba 1: Obtener tareas (EXITO 200)
+GET http://localhost:3000/api/v1/tasks
+
+###
+
+### Prueba 2: Crear sin título (ERROR 400)
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+    "descripcion": "Esto va a fallar"
+}
+
+###
+
+### Prueba 3: Borrar inexistente (ERROR 404)
+DELETE http://localhost:3000/api/v1/tasks/999
