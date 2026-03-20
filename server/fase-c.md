@@ -21,11 +21,11 @@ La API traduce mensajes de error internos a códigos de estado estándar de la i
 ## 🧪 3. Colección de Pruebas de Integración
 Para documentar y repetir las pruebas sin depender de herramientas de pago, se ha creado el archivo `pruebas.http` utilizando la extensión **REST Client**.
 
+
 ### A. Prueba de Validación: POST sin Título (Error 400)
 Se intenta crear una tarea omitiendo el campo `title`. El controlador intercepta la falta de datos y el middleware responde con un 400.
 
 > ![Error 400](../img/ERROR-400.png)
-
 
 
 ### B. Prueba de Existencia: DELETE ID Inexistente (Error 404)
@@ -33,10 +33,11 @@ Se intenta eliminar la tarea con ID `999`. El servicio lanza una excepción que 
 
 > ![Error 404](../img/ERROR-404.png)
 
-### C. Registro de Logs del Servidor
-Aunque el cliente recibe una respuesta limpia, el servidor registra el error técnico completo en la terminal para facilitar el debug.
 
-> ![Éxito 200](../img/EXITO-200.png)
+### C. Prueba de Éxito: Listar Tareas (Status 200)
+Se verifica que la ruta principal sigue funcionando correctamente tras implementar el manejo de errores.
+
+![Éxito 200](../img/EXITO-200.png)
 
 ---
 **Estado de la fase:** ✅ Completada y verificada.
