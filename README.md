@@ -1,21 +1,21 @@
 # 📝 Taskflow Project
 
-**🚀 Aplicación en vivo:** [Puntada Maestra - Taskflow Project con Vercel](https://primeras-puntadas-tailwindcss-ainoa.vercel.app)
-
----
-
 ## 📝 Gestión Inteligente para el Taller de Costura
 
 **Puntada Maestra** es un gestor de tareas dinámico diseñado para digitalizar el flujo de trabajo en talleres de corte y confección. Permite organizar encargos, priorizar urgencias y realizar un seguimiento preciso de cada prenda desde la recepción hasta la entrega final.
+
+---
 
 ## 🚀 Características
 
 - **Gestión de Tareas:** Añade tareas con título, descripción y categoría.
 - **Priorización:** Clasificación visual mediante colores (Baja, Media, Alta).
 - **Flujo de Trabajo:** Mueve tareas entre el panel principal y el panel de estado (Aside).
-- **Persistencia:** Los datos se guardan en el navegador mediante `LocalStorage`.
+- **Persistencia:** Gestión de datos en tiempo real mediante un servidor Node.js/Express.
 - **Buscador en Tiempo Real:** Filtra tareas instantáneamente por su título.
 - **Diseño Responsivo:** Interfaz adaptada con Flexbox.
+
+---
 
 ## ✨ Funcionalidades Pro (Implementadas con IA)
 
@@ -24,16 +24,64 @@ Tras una fase de experimentación y optimización asistida por IA, se han integr
 - **🔍 Búsqueda Omnicanal:** Filtro inteligente en tiempo real que rastrea coincidencias tanto en el **título de la prenda** como en su **categoría/descripción**.
 - **⚖️ Algoritmo de Priorización:** Ordenación automática basada en un mapa de pesos numéricos. Las tareas **Altas** (urgentes) encabezan siempre la lista, seguidas de Media y Baja.
 - **📝 Edición In situ:** Sistema de edición rápida mediante **doble clic** en la información de la tarea, permitiendo corregir detalles sin eliminar el registro.
-- **🔄 Flujo Inmutable:** Gestión de estados (Pendiente, Progreso, Finalizado) mediante una arquitectura que protege la integridad de los datos en `LocalStorage`.
+- **🔄 Flujo Inmutable:** Gestión de estados (Pendiente, Progreso, Finalizado) mediante una arquitectura que protege la integridad de los datos en el servidor.
+
+---
+
+## 🏗️ Ingeniería del Backend y Arquitectura de Capas
+
+En esta fase, el proyecto ha evolucionado de una aplicación local a un sistema **Cliente-Servidor** robusto, eliminando la dependencia de `LocalStorage` para los datos del dominio y adoptando estándares de ingeniería de software modernos.
+
+### 🏛️ Organización del Servidor (Domain-Driven Design)
+Se ha implementado una arquitectura de **separación absoluta de responsabilidades** en Node.js (ES Modules), garantizando la limpieza del código:
+*   **`config/env.js`**: Gestión centralizada de variables de entorno y validación proactiva del sistema (Fase A).
+*   **`routes/task.routes.js`**: Definición de endpoints RESTful y ruteo de peticiones.
+*   **`controllers/task.controller.js`**: Capa de red que gestiona el protocolo HTTP, extrae datos y aplica validación defensiva (Fase B).
+*   **`services/task.service.js`**: Capa de lógica de negocio pura. Maneja la persistencia simulada en memoria y gestiona errores de dominio (Fase B).
+
+### 🛡️ Gestión de Errores y Middlewares (Fase C)
+Se ha implementado un **Middleware Global de Excepciones** que garantiza la robustez y seguridad del sistema:
+*   **Mapeo Semántico:** Traduce errores de lógica interna (`NOT_FOUND`) en códigos de estado **HTTP 404**.
+*   **Validación de Datos:** Captura intentos de registro corruptos enviando un **HTTP 400 (Bad Request)**.
+*   **Seguridad y Abstracción:** Centraliza los fallos críticos devolviendo un **HTTP 500** genérico, evitando la filtración de trazas técnicas (stack traces) sensibles al cliente.
+
+### 📡 Documentación de la API REST (v1)
+| Método | Endpoint | Descripción | Estado OK |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/v1/tasks` | Obtiene el listado completo de prendas/tareas | 200 |
+| **POST** | `/api/v1/tasks` | Registra una nueva prenda en el sistema | 201 |
+| **PUT** | `/api/v1/tasks/:id` | Actualiza estado o detalles de una prenda | 200 |
+| **DELETE** | `/api/v1/tasks/:id` | Elimina un registro de forma permanente | 204 |
+
+### 🌐 Transparencia de Red en el Frontend (Fase D)
+El cliente ha sido refactorizado para interactuar con la API mediante peticiones **asíncronas (Fetch API)**, gestionando la "física del mundo real":
+*   **Estado de Carga (Loading):** Indicadores visuales (spinners) y bloqueo de inputs durante la latencia de red.
+*   **Estado de Éxito (Success):** Sincronización reactiva de la interfaz de usuario con el estado real del servidor.
+*   **Estado de Error (Error):** Feedback visual dinámico (bloques de alerta) ante caídas de servidor o respuestas de error 4xx/5xx.
+
+---
 
 ## 🛠️ Stack Tecnológico
 
+### Frontend (Cliente)
 * **HTML5:** Estructura semántica (Main, Aside, Sections).
-* **CSS3:** Variables personalizadas, Flexbox y diseño de componentes.
-* **JavaScript:** Manipulación del DOM, eventos y almacenamiento local.
+* **CSS3:** Variables personalizadas, Flexbox y diseño de componentes con Tailwind CSS.
+* **JavaScript (ES6+):** Manipulación del DOM, arquitectura de módulos (import/export) y consumo de APIs asíncronas mediante **Fetch API**.
 
-## 📦 Instalación y Uso
-- **Clona este repositorio:** `https://github.com/ainoadura/primeras-puntadas-tailwindcss-ainoa-dura`
+### Backend (Servidor)
+* **Node.js:** Entorno de ejecución para el servidor de JavaScript.
+* **Express.js:** Framework para la creación de la API RESTful y gestión de rutas.
+* **CORS:** Middleware para la gestión de seguridad y permisos de acceso entre dominios.
+* **Dotenv:** Gestión de variables de entorno para una configuración segura.
+* **Nodemon:** Herramienta de desarrollo para el reinicio automático del servidor.
+
+---
+
+## 🛠️ Desarrollo Local
+El proyecto requiere **Node.js** instalado. 
+1. Instala las dependencias en la carpeta `/server` mediante `npm install`.
+2. Lanza el servidor con `npm run dev`.
+3. Abre el frontend mediante un servidor local (Live Server).
 
 ---
 
@@ -57,7 +105,7 @@ Tras una fase de experimentación y optimización asistida por IA, se han integr
 
 ### 4. Persistencia de Datos
 - **Recarga (F5):** Comprobado que las tareas y sus estados persisten tras refrescar la página.
-- **Cierre de Navegador:** Los datos se mantienen en `LocalStorage` para futuras sesiones.
+- **Cierre de Navegador:** Los datos se mantienen en el servidor para futuras sesiones.
 
 ---
 
@@ -100,5 +148,18 @@ Un cliente llamado "Carlos" llama por teléfono para preguntar por su encargo.
 Te das cuenta de que anotaste mal el tipo de tela en una tarea ya creada.
 *   **Acción:** Haces **doble clic** sobre el título "Falda de Algodón".
 *   **Resultado:** Se abre un cuadro donde cambias el nombre a "Falda de Seda". El cambio se guarda en el disco sin necesidad de borrar y volver a escribir la prioridad o categoría.
+
+---
+
+## 🧠 Reflexión y Calidad (Ingeniería de Software)
+
+La transición de una aplicación basada en persistencia local a una arquitectura **Cliente-Servidor** ha permitido aplicar principios avanzados de desarrollo:
+
+1. **Desacoplamiento:** El Frontend es ahora independiente de la forma en que se guardan los datos. Podríamos cambiar el array en memoria por una base de datos real sin modificar la interfaz de usuario.
+2. **Resiliencia:** La gestión de estados de red (Loading/Error) garantiza que la aplicación sea usable bajo condiciones de red inestables, evitando que la UI se quede "bloqueada".
+3. **Escalabilidad:** Gracias a la arquitectura de capas en el Backend, la lógica de negocio está protegida en los Servicios, facilitando el mantenimiento y crecimiento del proyecto.
+
+**Conclusión:** Este laboratorio consolida la importancia de la **limpieza arquitectónica** y el manejo proactivo de errores para crear software profesional, robusto y escalable.
+
 
 Desarrollado por [ainoadura](https://github.com/ainoadura)

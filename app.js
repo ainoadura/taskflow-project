@@ -1,3 +1,5 @@
+import { taskApi } from '/taskflow-project/api/client.js'; 
+
 //SELECTORES
 const formulario = document.querySelector('#miFormulario');
 const listaTareas = document.querySelector('#listaTareas');
@@ -8,7 +10,6 @@ const inputCategoria = document.querySelector('#inputCategoria');
 const selectPrioridad = document.querySelector('#prioridadTarea');
 
 const STORAGE_KEYS = {
-    TAREAS: 'misTareas',
     THEME: 'theme'
 };
 
@@ -21,7 +22,34 @@ const ESTADOS_TAREA = {
 
 //CARGA INICIAL
 let filtroActual = 'todos';
-let tareas = JSON.parse(localStorage.getItem(STORAGE_KEYS.TAREAS)) || [];
+let tareas = [];
+
+async function cargarDatosIniciales() {
+    listaTareas.innerHTML = `
+        <div class="flex flex-col items-center p-8 opacity-50">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mb-2"></div>
+            <p class="text-slate-500 font-medium">Conectando con TaskFlow...</p>
+        </div>`;
+
+    try {
+        tareas = await taskApi.getAll();
+        renderizarTodo();
+    } catch (error) {
+        console.error("Error al conectar con el servidor:", error);
+
+        listaTareas.innerHTML = `
+            <div class="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl text-center">
+                <p class="text-red-600 dark:text-red-400 font-bold">Error de conexión</p>
+                <p class="text-red-500 dark:text-red-400 text-sm mb-4">No se pudo conectar con el servidor de TaskFlow.</p>
+                <button onclick="location.reload()" class="px-4 py-2 bg-red-600 text-white rounded-lg text-xs font-bold uppercase hover:bg-red-700 transition-colors">
+                    Reintentar conexión
+                </button>
+            </div>`;
+    }
+}
+
+// Ejecutamos la carga inicial
+cargarDatosIniciales();
 
 // --- NUEVA FUNCIÓN: RENDERIZADO DINÁMICO (FILTRO + BÚSQUEDA + ORDENACIÓN) ---
 function renderizarTodo() {
@@ -71,10 +99,6 @@ function esEstadoDeResumen(estado) {
     return estado === ESTADOS_TAREA.PROGRESO || estado === ESTADOS_TAREA.FINALIZADO;
 }
 
-//FUNCIÓN DE GUARDADO
-function guardarEnDisco() {
-    localStorage.setItem(STORAGE_KEYS.TAREAS, JSON.stringify(tareas));
-}
 
 //UTILIDADES DE VALIDACIÓN
 function limpiarErroresFormulario() {
@@ -124,21 +148,49 @@ function ubicarTareaInicial(tarea, elemento) {
     }
 }
 
-function manejarCambioEstado(tarea, nuevoEstado) {
+async function manejarCambioEstado(tarea, nuevoEstado) {
     if (!esEstadoValido(nuevoEstado)) return;
-    tarea.estado = nuevoEstado;
-    guardarEnDisco();
-    renderizarTodo(); // Actualización global para mover la tarea de lista
+
+    try {
+        // Clonamos la tarea con el nuevo estado para enviarla al servidor
+        const tareaActualizada = { ...tarea, estado: nuevoEstado };
+        
+        // Llamada asíncrona a la API
+        await taskApi.update(tarea.id, tareaActualizada);
+        
+        // Si el servidor responde OK, actualizamos localmente y dibujamos
+        tarea.estado = nuevoEstado;
+        renderizarTodo(); 
+    } catch (error) {
+        console.error(error);
+        alert("Error: No se pudo guardar el cambio de estado en el servidor.");
+    }
 }
 
-function manejarEliminacionTarea(id) {
-    tareas = tareas.filter(t => t.id !== id);
-    guardarEnDisco();
-    renderizarTodo();
+async function manejarEliminacionTarea(id, elemento) {
+    const btnEliminar = elemento.querySelector('.btn-eliminar');
+    try {
+        btnEliminar.disabled = true;
+        btnEliminar.innerHTML = '...'; 
+        btnEliminar.classList.add('opacity-50', 'cursor-not-allowed');
+
+        await taskApi.delete(id); 
+        
+        tareas = tareas.filter(t => t.id !== id);
+        renderizarTodo();
+    } catch (error) {
+        console.error("Error al borrar:", error);
+        alert("No se pudo eliminar la tarea del servidor");
+
+        btnEliminar.disabled = false;
+        btnEliminar.innerHTML = 'ELIMINAR';
+        btnEliminar.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
 }
+
 
 // --- EDICIÓN DE TAREAS ---
-function manejarEdicionTarea(tarea) {
+async function manejarEdicionTarea(tarea) {
     const nuevoTitulo = prompt("Editar nombre de la prenda/tarea:", tarea.titulo);
     if (nuevoTitulo === null || nuevoTitulo.trim().length < 3) {
         if (nuevoTitulo !== null) alert("El título debe tener al menos 3 caracteres.");
@@ -149,11 +201,26 @@ function manejarEdicionTarea(tarea) {
     
     // Si el usuario no cancela la descripción (null), procedemos a guardar
     if (nuevaDesc !== null) {
-        tarea.titulo = nuevoTitulo;
-        tarea.categoria = nuevaDesc.trim() || "General";
-        
-        guardarEnDisco();
-        renderizarTodo();
+        try {
+            // 1. Preparamos los nuevos datos
+            const datosActualizados = { 
+                ...tarea, 
+                titulo: nuevoTitulo, 
+                categoria: nuevaDesc.trim() || "General" 
+            };
+
+            // 2. Persistencia real: Enviamos a la API y esperamos confirmación
+            await taskApi.update(tarea.id, datosActualizados);
+            
+            // 3. Si el servidor responde OK, actualizamos la interfaz
+            tarea.titulo = nuevoTitulo;
+            tarea.categoria = datosActualizados.categoria;
+            renderizarTodo();
+
+        } catch (error) {
+            console.error(error);
+            alert("No se pudo guardar la edición en el servidor.");
+        }
     }
 }
 
@@ -165,9 +232,8 @@ function configurarEventosTarea(tarea, elemento) {
 
     if (btnProgreso) btnProgreso.addEventListener('click', () => manejarCambioEstado(tarea, ESTADOS_TAREA.PROGRESO));
     if (btnFinalizado) btnFinalizado.addEventListener('click', () => manejarCambioEstado(tarea, ESTADOS_TAREA.FINALIZADO));
-    if (btnEliminar) btnEliminar.addEventListener('click', () => manejarEliminacionTarea(tarea.id));
+    if (btnEliminar) btnEliminar.addEventListener('click', () => manejarEliminacionTarea(tarea.id, elemento));
     
-    // Evento de Edición (Doble clic)
     if (infoTarea) infoTarea.addEventListener('dblclick', () => manejarEdicionTarea(tarea));
 }
 
@@ -197,16 +263,33 @@ function crearTareaDesdeFormulario() {
 }
 
 //EVENTO SUBMIT
-formulario.addEventListener('submit', (e) => {
+formulario.addEventListener('submit', async (e) => {
     e.preventDefault();
-    limpiarErroresFormulario();
+    const btnSubmit = formulario.querySelector('button[type="submit"]');
     const nuevaTarea = crearTareaDesdeFormulario();
+
     if (nuevaTarea) {
-        tareas.push(nuevaTarea);
-        guardarEnDisco();
-        formulario.reset();
-        renderizarTodo();
+        try {
+            // ESTADO DE CARGA: Bloqueamos para evitar duplicados por latencia
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = 'GUARDANDO...';
+
+            const tareaGuardada = await taskApi.create(nuevaTarea);
+            tareas.push(tareaGuardada); 
+            
+            formulario.reset();
+            renderizarTodo(); // ESTADO DE ÉXITO
+        } catch (error) {
+            // ESTADO DE ERROR: Feedback visual si falla el servidor (400 o 500)
+            console.error("Fallo al crear tarea:", error);
+            alert("No se pudo guardar la tarea. Revisa que los datos sean correctos.");
+        } finally {
+            // VOLVER AL ESTADO INICIAL
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = 'AGREGAR TAREA';
+        }
     }
+    
 });
 
 // --- BÚSQUEDA EN TIEMPO REAL ---
@@ -268,7 +351,6 @@ function finalizarTodasLasTareas() {
         });
 
         // 3. Guardamos y refrescamos la vista
-        guardarEnDisco();
         renderizarTodo();
     }
 }
@@ -289,7 +371,6 @@ function borrarTareasFinalizadas() {
         // Filtramos para quedarnos solo con las que NO están finalizadas
         tareas = tareas.filter(t => t.estado !== ESTADOS_TAREA.FINALIZADO);
         
-        guardarEnDisco();
         renderizarTodo();
     }
 }

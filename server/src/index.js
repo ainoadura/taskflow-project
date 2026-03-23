@@ -1,9 +1,8 @@
-require('dotenv').config(); 
-
-const express = require('express');
-const cors = require('cors');
-const { port } = require('./config/env');
-const taskRoutes = require('./routes/task.routes');
+import 'dotenv/config'; 
+import express from 'express';
+import cors from 'cors';
+import { PORT } from './config/env.js'; 
+import taskRoutes from './routes/task.routes.js';
 
 const app = express();
 
@@ -42,4 +41,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
+// Encender el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor TaskFlow listo en http://localhost:${PORT}`);
+});
+
+
+export default app; 
