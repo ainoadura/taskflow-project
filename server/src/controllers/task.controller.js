@@ -1,6 +1,6 @@
-const TaskService = require('../services/task.service');
+import * as TaskService from '../services/task.service.js';
 
-const obtenerTareas = (req, res, next) => {
+export const obtenerTareas = (req, res, next) => {
     try {
         const tareas = TaskService.obtenerTodas();
         res.status(200).json(tareas);
@@ -9,29 +9,36 @@ const obtenerTareas = (req, res, next) => {
     }
 };
 
-const crearTarea = (req, res, next) => {
-    const { title } = req.body;
+export const crearTarea = (req, res, next) => {
+    const { titulo } = req.body;
 
-    if (!title || typeof title !== 'string' || title.trim().length === 0) {
+    if (!titulo || typeof titulo !== 'string' || titulo.trim().length === 0) {
         const error = new Error('INVALID_DATA');
         return next(error);
     }
 
     try {
-        const nuevaTarea = TaskService.crearTarea({ title: title.trim() });
+        const nuevaTarea = TaskService.crearTarea({ titulo: titulo.trim() });
         res.status(201).json(nuevaTarea);
     } catch (error) {
         next(error);
     }
 };
 
-const eliminarTarea = (req, res, next) => {
+export const actualizarTarea = (req, res, next) => {
     const { id } = req.params;
+    const data = req.body;
 
-    if (isNaN(id)) {
-        const error = new Error('INVALID_ID');
-        return next(error);
+    try {
+        const tareaActualizada = TaskService.actualizarTarea(id, data);
+        res.status(200).json(tareaActualizada);
+    } catch (error) {
+        next(error);
     }
+};
+
+export const eliminarTarea = (req, res, next) => {
+    const { id } = req.params;
 
     try {
         TaskService.eliminarTarea(id);
@@ -39,10 +46,4 @@ const eliminarTarea = (req, res, next) => {
     } catch (error) {
        next(error);
     }   
-};
-
-module.exports = {
-    obtenerTareas,
-    crearTarea,
-    eliminarTarea
 };
