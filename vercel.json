@@ -4,8 +4,10 @@
     { "src": "server/src/index.js", "use": "@vercel/node" },
     { "src": "index.html", "use": "@vercel/static" }
   ],
+  
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "server/src/index.js" },
+    { "source": "/api/v1/tasks", "destination": "server/src/index.js" },
+    { "source": "/api/v1/tasks/(.*)", "destination": "server/src/index.js" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
