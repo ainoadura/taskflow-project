@@ -1,8 +1,8 @@
 import 'dotenv/config'; 
 import express from 'express';
 import cors from 'cors';
-import { PORT } from './config/env.js'; 
-import taskRoutes from './routes/task.routes.js';
+import { PORT } from '../server/src/config/env.js'; 
+import taskRoutes from '../server/src/routes/task.routes.js';
 
 const app = express();
 
