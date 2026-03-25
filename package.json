@@ -1,4 +1,13 @@
 {
+  "name": "taskflow-project",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "api/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
   "devDependencies": {
     "autoprefixer": "^10.4.27",
     "postcss": "^8.5.8",
