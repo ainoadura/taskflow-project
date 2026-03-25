@@ -4,7 +4,7 @@ let tasks = [
     { id: "2", titulo: 'Arquitectura por capas', categoria: 'Backend', prioridad: 'Media', estado: 'pendiente' }
 ];
 
-export const obtenerTodas = () => {
+export const obtenerTodas = async () => {
     return tasks;
 };
 

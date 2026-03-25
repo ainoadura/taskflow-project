@@ -1,8 +1,8 @@
 import * as TaskService from '../services/task.service.js';
 
-export const obtenerTareas = (req, res, next) => {
+export const obtenerTareas = async (req, res, next) => {
     try {
-        const tareas = TaskService.obtenerTodas();
+        const tareas = await TaskService.obtenerTodas();
         res.status(200).json(tareas);
     } catch (error) {
         next(error); 
