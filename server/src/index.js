@@ -10,11 +10,6 @@ const app = express();
 app.use(cors());          
 app.use(express.json());  
 
-// Ruta de prueba (Ruta raíz)
-app.get('/', (req, res) => {
-    res.send('¡Servidor de TaskFlow encendido y reportándose!');
-});
-
 app.use('/api/v1/tasks', taskRoutes);
 
 app.use((err, req, res, next) => {
