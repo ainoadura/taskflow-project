@@ -4,18 +4,16 @@
     { "src": "server/src/index.js", "use": "@vercel/node" },
     { "src": "index.html", "use": "@vercel/static" }
   ],
-  "rewrites": [
-    { 
-      "source": "/api/v1/tasks", 
-      "destination": "/server/src/index.js" 
-    },
-    { 
-      "source": "/api/v1/tasks/(.*)", 
-      "destination": "/server/src/index.js" 
-    },
-    { 
-      "source": "/((?!api/).*)", 
-      "destination": "/index.html" 
+
+ "functions": {
+    "server/src/index.js": {
+      "runtime": "vercel-node@latest"
     }
+  },
+  
+  "rewrites": [
+    { "source": "/api/v1/tasks", "destination": "/server/src/index.js" },
+    { "source": "/api/v1/tasks/(.*)", "destination": "/server/src/index.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
