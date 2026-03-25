@@ -2,13 +2,16 @@
   "version": 2,
   "rewrites": [
     { 
+      "source": "/api/v1/tasks", 
+      "destination": "/api/index.js" 
+    },
+    { 
       "source": "/api/v1/tasks/:path*", 
       "destination": "/api/index.js" 
     },
     { 
-      "source": "/api/v1/tasks", 
-      "destination": "/api/index.js" 
+      "source": "/((?!api/v1/tasks).*)", 
+      "destination": "/index.html" 
     }
   ]
 }
-
