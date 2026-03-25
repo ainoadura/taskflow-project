@@ -36,10 +36,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Encender el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor TaskFlow listo en http://localhost:${PORT}`);
-});
-
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Servidor TaskFlow listo en http://localhost:${PORT}`);
+    });
+}
 
 export default app; 
