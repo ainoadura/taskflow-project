@@ -1,4 +1,4 @@
-import { taskApi } from '/taskflow-project/api/client.js'; 
+import { taskApi } from './server/src/api/client.js'; 
 
 //SELECTORES
 const formulario = document.querySelector('#miFormulario');

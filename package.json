@@ -3,6 +3,10 @@
   "description": "API Taskflow v1",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "start": "node server/src/index.js",
+    "dev": "node server/src/index.js"
+  },
   "engines": {
     "node": "20.x"
   },
