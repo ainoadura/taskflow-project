@@ -1,4 +1,4 @@
-const API_URL = '/api/v1/tasks';
+const API_URL = `${window.location.origin}/api/v1/tasks`;
 
 export const taskApi = {
     // Obtener todas las tareas
