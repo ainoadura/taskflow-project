@@ -1,7 +1,9 @@
 {
   "version": 2,
+  "outputDirectory": "frontend",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/server.js" }
+    { "source": "/api/(.*)", "destination": "api/server.js" },
+    { "source": "/(.*)", "destination": "/frontend/$1" }
   ]
 }
 
