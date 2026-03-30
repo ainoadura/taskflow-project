@@ -10,4 +10,4 @@ app.get('/api/v1/tasks', (req, res) => {
   res.json([])
 })
 
-export default app
+export default app;
