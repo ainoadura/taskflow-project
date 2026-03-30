@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --watch server/src/index.js",
-    "start": "node server/src/index.js"
+    "dev": "node --watch api/index.js",
+    "start": "node api/index.js"
   },
   "engines": {
     "node": "20.x"
