@@ -259,7 +259,7 @@ function crearTareaDesdeFormulario() {
         return null;
     }
 
-    return { id: Date.now(), titulo, categoria, prioridad, estado: ESTADOS_TAREA.PENDIENTE };
+    return { titulo, categoria, prioridad, estado: ESTADOS_TAREA.PENDIENTE };
 }
 
 //EVENTO SUBMIT
