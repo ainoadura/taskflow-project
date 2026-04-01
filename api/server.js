@@ -34,4 +34,28 @@ app.post('/api/v1/tasks', (req, res) => {
   res.status(201).json(nuevaTarea);
 })
 
+// ACTUALIZAR (Para marcar como finalizada o progreso)
+app.put('/api/v1/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const index = tareas.findIndex(t => t.id === id);
+
+  if (index === -1) return res.status(404).json({ error: 'No encontrada' });
+
+  // Mezclamos los datos antiguos con los nuevos (como el estado)
+  tareas[index] = { ...tareas[index], ...req.body };
+  res.json(tareas[index]);
+});
+
+// BORRAR
+app.delete('/api/v1/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const index = tareas.findIndex(t => t.id === id);
+
+  if (index === -1) return res.status(404).json({ error: 'No encontrada' });
+
+  tareas.splice(index, 1);
+  res.status(204).send(); // 204 significa "OK, borrado sin contenido"
+});
+
+
 export default app;
