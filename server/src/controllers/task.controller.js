@@ -10,19 +10,27 @@ export const obtenerTareas = async (req, res, next) => {
 };
 
 export const crearTarea = (req, res, next) => {
-    const { titulo } = req.body;
+    const { titulo, categoria, prioridad, estado } = req.body;
 
-    if (!titulo || typeof titulo !== 'string' || titulo.trim().length === 0) {
+    if (!titulo || typeof titulo !== 'string' || titulo.trim().length < 3) {
         const error = new Error('INVALID_DATA');
         return next(error);
     }
 
     try {
-        const nuevaTarea = TaskService.crearTarea({ titulo: titulo.trim() });
+        // 3. Pasa el objeto COMPLETO al servicio para que se guarde con categoría y prioridad
+        const nuevaTarea = TaskService.crearTarea({ 
+            titulo: titulo.trim(),
+            categoria: categoria || 'General',
+            prioridad: prioridad || 'Media',
+            estado: estado || 'pendiente'
+        });
+        
         res.status(201).json(nuevaTarea);
     } catch (error) {
         next(error);
     }
+    
 };
 
 export const actualizarTarea = (req, res, next) => {

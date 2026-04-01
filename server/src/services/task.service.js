@@ -14,7 +14,7 @@ export const crearTarea = (data) => {
         titulo: data.titulo,
         categoria: data.categoria || 'General',
         prioridad: data.prioridad || 'Media',
-        estado: 'pendiente',
+        estado: data.estado || 'pendiente',
         createdAt: new Date()
     };
     tasks.push(nuevaTarea);
