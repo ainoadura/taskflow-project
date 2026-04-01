@@ -6,8 +6,15 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get('/api/v1/tasks', (req, res) => {
-  res.json([])
+let tareas = [];
+
+app.post('/api/v1/tasks', (req, res) => {
+  const nuevaTarea = { 
+    id: Date.now().toString(), 
+    ...req.body 
+  };
+  tareas.push(nuevaTarea);
+  res.status(201).json(nuevaTarea);
 })
 
 export default app;
