@@ -5,27 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puntada Maestra</title>
     <!-- LOGO DE LA PESTAÑA -->
-    <link rel="icon" type="image/png" href="img/icono.png">
+    <link rel="icon" type="image/png" href="/img/icono.png">
     <!-- LINK PARA LA FUENTE DE LA CABECERA -->
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <!-- Definimos variables CSS en nuestro documento style.css -->
     <link rel="stylesheet" href="style.css">
     <!-- Línea para activar todo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
 </head>
+
 <body class="bg-white dark:bg-slate-950 text-black dark:text-white font-sans transition-colors">
 
     <header class="h-[200px] flex items-center justify-center text-white bg-cover bg-center shadow-inner" 
-        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/telas.jpg');">
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/img/telas.jpg');">
         <h1 class="font-serif italic text-6xl text-center text-white drop-shadow-lg mb-1 leading-tight">
             Puntada Maestra
         </h1> 
-
-        <!-- Llamamos a Tailwind y configuramos el modo oscuro-->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-        tailwind.config = { darkMode: 'class', }
-        </script>
     </header>
 
     <!-- BOTÓN MODO OSCURO -->
