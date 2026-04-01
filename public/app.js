@@ -1,4 +1,4 @@
-import { taskApi } from '../server/src/api/client.js'; 
+import { taskApi } from './client.js'; 
 
 //SELECTORES
 const formulario = document.querySelector('#miFormulario');
@@ -359,7 +359,8 @@ function finalizarTodasLasTareas() {
 document.querySelector('#btnFinalizarTodo')?.addEventListener('click', finalizarTodasLasTareas);
 
 // FUNCIÓN PARA BORRAR TODAS LAS TAREAS CON ESTADO FINALIZADO
-function borrarTareasFinalizadas() {
+// FUNCIÓN PARA BORRAR TODAS LAS TAREAS CON ESTADO FINALIZADO (CORREGIDA)
+async function borrarTareasFinalizadas() {
     const finalizadas = tareas.filter(t => t.estado === ESTADOS_TAREA.FINALIZADO);
 
     if (finalizadas.length === 0) {
@@ -367,11 +368,19 @@ function borrarTareasFinalizadas() {
         return;
     }
 
-    if (confirm(`¿Estás seguro de que quieres borrar permanentemente las ${finalizadas.length} tareas finalizadas?`)) {
-        // Filtramos para quedarnos solo con las que NO están finalizadas
-        tareas = tareas.filter(t => t.estado !== ESTADOS_TAREA.FINALIZADO);
-        
-        renderizarTodo();
+    if (confirm(`¿Quieres borrar permanentemente las ${finalizadas.length} tareas finalizadas?`)) {
+        try {
+            // Borramos cada una en el servidor
+            for (const tarea of finalizadas) {
+                await taskApi.delete(tarea.id);
+            }
+            // Actualizamos la lista local y dibujamos
+            tareas = tareas.filter(t => t.estado !== ESTADOS_TAREA.FINALIZADO);
+            renderizarTodo();
+        } catch (error) {
+            console.error("Error al borrar en el servidor:", error);
+            alert("Hubo un problema al borrar las tareas del servidor.");
+        }
     }
 }
 

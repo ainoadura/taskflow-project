@@ -4,11 +4,19 @@ import cors from 'cors';
 import { PORT } from './config/env.js'; 
 import taskRoutes from './routes/task.routes.js';
 
+import path from 'path'; 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 // Configurar Middlewares (Capa de seguridad y datos)
 app.use(cors());          
 app.use(express.json());  
+
+app.use(express.static(path.join(__dirname, '../../public')));
 
 app.use('/api/v1/tasks', taskRoutes);
 
@@ -36,10 +44,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-        console.log(`Servidor TaskFlow listo en http://localhost:${PORT}`);
-    });
-}
+app.listen(PORT, () => {
+    console.log(`Servidor TaskFlow listo en el puerto ${PORT}`);
+});
 
 export default app; 
