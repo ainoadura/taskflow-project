@@ -116,14 +116,14 @@ function marcarCampoError(campo) {
 //CREACIÓN / RENDERIZADO
 function crearElementoTarea(tarea) {
     const nuevaLi = document.createElement('li');
-    nuevaLi.className = 'flex justify-between items-center p-4 bg-white dark:bg-[#1e293b] rounded-xl mb-3 shadow-sm border border-transparent dark:border-slate-700 transition-all hover:-translate-y-0.5 hover:shadow-md';
-    
+    nuevaLi.className = 'flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-white dark:bg-[#1e293b] rounded-xl mb-3 shadow-sm border border-transparent dark:border-slate-700 transition-all hover:-translate-y-0.5 hover:shadow-md gap-4';
+
     nuevaLi.innerHTML = `
     <div class="tarea-info flex flex-col cursor-pointer" title="Doble clic para editar">
         <label class="tarea-titulo font-bold !text-black dark:!text-white">${tarea.titulo}</label>
         <span class="tarea-categoria text-sm text-slate-500 dark:text-slate-400">${tarea.categoria}</span>
     </div>
-    <div class="tarea-acciones flex gap-2">
+    <div class="tarea-acciones flex flex-wrap gap-2">
         <span class="badge-${tarea.prioridad.toLowerCase()} px-3 py-1 rounded-full text-[10px] font-bold uppercase shadow-sm">${tarea.prioridad}</span>
         
         ${tarea.estado === ESTADOS_TAREA.PENDIENTE ? `
