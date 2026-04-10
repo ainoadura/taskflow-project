@@ -7,7 +7,6 @@ Se ha implementado una arquitectura de **separación absoluta de responsabilidad
 
 *   **`routes/task.routes.js`**: Definición de endpoints RESTful.
 *   **`controllers/task.controller.js`**: Capa de red que gestiona el protocolo HTTP.
-    <!-- NUEVO: Bloque de Controlador -->
     > **Técnica:** Implementa **validación defensiva** y normalización de datos (ej: `.trim()`) antes de delegar a la lógica de negocio.
     ```javascript
     if (!titulo || titulo.trim().length < 3) {
@@ -15,8 +14,8 @@ Se ha implementado una arquitectura de **separación absoluta de responsabilidad
         return next(error);
     }
     ```
+
 *   **`services/task.service.js`**: Capa de lógica de negocio pura.
-    <!-- NUEVO: Bloque de Servicio -->
     > **Técnica:** Gestión de estado mediante **operador spread** para actualizaciones inmutables y lanzamiento de **errores de dominio** (`NOT_FOUND`).
     ```javascript
     tasks[index] = { ...tasks[index], ...data };
@@ -31,10 +30,10 @@ Se ha implementado un **Middleware Global de Excepciones** que centraliza el tra
 *   **Pipeline de Error:** Se utiliza el patrón de middleware de Express para capturar excepciones mediante el objeto `next(error)` en los controladores.
 
 ```javascript
-// Captura de errores de dominio en el Middleware Global
 if (error.message === 'NOT_FOUND') {
     return res.status(404).json({ error: 'Recurso no encontrado' });
-} ``` 
+} 
+``` 
 
 * 🔍 **Documentación Detallada:** Para ver el informe exhaustivo de capturas, mapeo de errores y pruebas de red, consulta el [Reporte de la Fase C](../docs/fase-c.md).
 
@@ -57,7 +56,8 @@ if (error.message === 'NOT_FOUND') {
   "prioridad": "Alta | Media | Baja",
   "estado": "pendiente | progreso | finalizado",
   "createdAt": "date"
-} ```
+} 
+```
 
 ---
 
@@ -66,6 +66,21 @@ El cliente ha sido refactorizado para interactuar con la API mediante peticiones
 *   **Estado de Carga (Loading):** Indicadores visuales (spinners) y bloqueo de inputs durante la latencia de red.
 *   **Estado de Éxito (Success):** Sincronización reactiva de la interfaz de usuario con el estado real del servidor.
 *   **Estado de Error (Error):** Feedback visual dinámico (bloques de alerta) ante caídas de servidor o respuestas de error 4xx/5xx.
+
+### Ejemplo de flujo asíncrono
+```javascript
+async function cargarTareas() {
+    try {
+        mostrarSpinner(true);
+        const tareas = await taskApi.getAll();
+        renderizarTodo(tareas); 
+    } catch (error) {
+        mostrarError(error.message); 
+    } finally {
+        mostrarSpinner(false);
+    }
+}
+```
 
 ---
 
