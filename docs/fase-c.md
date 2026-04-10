@@ -37,7 +37,7 @@ Se intenta eliminar la tarea con ID `999`. El servicio lanza una excepción que 
 ### C. Prueba de Éxito: Listar Tareas (Status 200)
 Se verifica que la ruta principal sigue funcionando correctamente tras implementar el manejo de errores.
 
-![Éxito 200](../img/EXITO-200.png)
+> ![Éxito 200](../img/EXITO-200.png)
 
 ---
 **Estado de la fase:** ✅ Completada y verificada.

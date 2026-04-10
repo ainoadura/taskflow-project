@@ -3,19 +3,39 @@
 En esta fase, el proyecto ha evolucionado de una aplicación local a un sistema **Cliente-Servidor** robusto, eliminando la dependencia de `LocalStorage` para los datos del dominio y adoptando estándares de ingeniería de software modernos.
 
 ## 🏛️ Organización del Servidor (Domain-Driven Design)
-Se ha implementado una arquitectura de **separación absoluta de responsabilidades** en Node.js (ES Modules), garantizando la limpieza del código:
-*   **`config/env.js`**: Gestión centralizada de variables de entorno y validación proactiva del sistema (Fase A).
-*   **`routes/task.routes.js`**: Definición de endpoints RESTful y ruteo de peticiones.
-*   **`controllers/task.controller.js`**: Capa de red que gestiona el protocolo HTTP, extrae datos y aplica validación defensiva (Fase B).
-*   **`services/task.service.js`**: Capa de lógica de negocio pura. Maneja la persistencia simulada en memoria y gestiona errores de dominio (Fase B).
+Se ha implementado una arquitectura de **separación absoluta de responsabilidades** en Node.js (ES Modules):
+
+*   **`routes/task.routes.js`**: Definición de endpoints RESTful.
+*   **`controllers/task.controller.js`**: Capa de red que gestiona el protocolo HTTP.
+    <!-- NUEVO: Bloque de Controlador -->
+    > **Técnica:** Implementa **validación defensiva** y normalización de datos (ej: `.trim()`) antes de delegar a la lógica de negocio.
+    ```javascript
+    if (!titulo || titulo.trim().length < 3) {
+        const error = new Error('INVALID_DATA');
+        return next(error);
+    }
+    ```
+*   **`services/task.service.js`**: Capa de lógica de negocio pura.
+    <!-- NUEVO: Bloque de Servicio -->
+    > **Técnica:** Gestión de estado mediante **operador spread** para actualizaciones inmutables y lanzamiento de **errores de dominio** (`NOT_FOUND`).
+    ```javascript
+    tasks[index] = { ...tasks[index], ...data };
+    ```
 
 ---
 
 ## 🛡️ Gestión de Errores y Middlewares (Fase C)
-Se ha implementado un **Middleware Global de Excepciones** que garantiza la robustez y seguridad del sistema:
-*   **Mapeo Semántico:** Traduce errores de lógica interna (`NOT_FOUND`) en códigos de estado **HTTP 404**.
-*   **Validación de Datos:** Captura intentos de registro corruptos enviando un **HTTP 400 (Bad Request)**.
-*   **Seguridad y Abstracción:** Centraliza los fallos críticos devolviendo un **HTTP 500** genérico, evitando la filtración de trazas técnicas (stack traces) sensibles al cliente.
+Se ha implementado un **Middleware Global de Excepciones** que centraliza el tratamiento de fallos:
+
+*   **Mapeo Semántico:** Traduce errores de lógica interna (`NOT_FOUND`, `INVALID_DATA`) en códigos de estado **HTTP 404** o **400**.
+*   **Pipeline de Error:** Se utiliza el patrón de middleware de Express para capturar excepciones mediante el objeto `next(error)` en los controladores.
+
+```javascript
+// Captura de errores de dominio en el Middleware Global
+if (error.message === 'NOT_FOUND') {
+    return res.status(404).json({ error: 'Recurso no encontrado' });
+} ``` 
+
 * 🔍 **Documentación Detallada:** Para ver el informe exhaustivo de capturas, mapeo de errores y pruebas de red, consulta el [Reporte de la Fase C](../docs/fase-c.md).
 
 ---
@@ -27,6 +47,17 @@ Se ha implementado un **Middleware Global de Excepciones** que garantiza la robu
 | **POST** | `/api/v1/tasks` | Registra una nueva prenda en el sistema | 201 |
 | **PUT** | `/api/v1/tasks/:id` | Actualiza estado o detalles de una prenda | 200 |
 | **DELETE** | `/api/v1/tasks/:id` | Elimina un registro de forma permanente | 204 |
+
+### Contrato de Datos (Modelo Tarea)
+```json
+{
+  "id": "string",
+  "titulo": "string (min 3 chars)",
+  "categoria": "string",
+  "prioridad": "Alta | Media | Baja",
+  "estado": "pendiente | progreso | finalizado",
+  "createdAt": "date"
+} ```
 
 ---
 

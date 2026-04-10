@@ -1,5 +1,11 @@
 # 📝 Taskflow Project
 
+---
+
+> **Link del proyecto en vivo:** 🚀 [Ver Puntada Maestra en Vercel](https://project-api-puntada-maestra.vercel.app/)
+
+---
+
 ## 📝 Gestión Inteligente para el Taller de Costura
 
 **Puntada Maestra** es un gestor de tareas dinámico diseñado para digitalizar el flujo de trabajo en talleres de corte y confección. Permite organizar encargos, priorizar urgencias y realizar un seguimiento preciso de cada prenda desde la recepción hasta la entrega final.
@@ -13,7 +19,7 @@
 - **Flujo de Trabajo:** Mueve tareas entre el panel principal y el panel de estado (Aside).
 - **Persistencia:** Gestión de datos en tiempo real mediante un servidor Node.js/Express.
 - **Buscador en Tiempo Real:** Filtra tareas instantáneamente por su título.
-- **Diseño Responsivo:** Interfaz adaptada con Flexbox.
+- **Diseño Responsivo:** Interfaz adaptada con Tailwind CSS, utilizando **layouts adaptativos** (columna en móvil / fila en PC) para evitar el desbordamiento de controles en pantallas estrechas.
 
 ---
 
